@@ -1,17 +1,21 @@
-import axios from 'axios'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import defaultImg from '../../assets/images/profileimg.png'
-import Header from '../../components/Header.tsx'
-import Navbar from '../../components/Navbar.tsx'
-import Profilebar from '../../components/sidebar/Profilebar.tsx'
-import { getImageImageUrl, useApiUrlStore, useProfileDataStore } from '../../store/store.ts'
+import axios from 'axios';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import defaultImg from '../../assets/images/profileimg.png';
+import Header from '../../components/Header.tsx';
+import Navbar from '../../components/Navbar.tsx';
+import Profilebar from '../../shared/components/sidebar/Profilebar.tsx';
+import {
+  getImageImageUrl,
+  useApiUrlStore,
+  useProfileDataStore,
+} from '../../store/store.ts';
 
 const Container = styled.div`
   display: flex;
   margin-top: 3rem;
-`
+`;
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -19,7 +23,7 @@ const ProfileWrapper = styled.div`
   width: calc(100% - 25rem);
   min-height: 48.75rem;
   border-left: 1px solid #d8d8d8;
-`
+`;
 
 const Upper = styled.div`
   display: flex;
@@ -28,7 +32,7 @@ const Upper = styled.div`
   width: calc(100% - 12.5rem);
   padding-left: 3rem;
   padding-right: 4.375rem;
-`
+`;
 
 const ProfileContent = styled.div`
   margin: 0 1.25rem 1.25rem 1.25rem;
@@ -39,26 +43,26 @@ const ProfileContent = styled.div`
   border-radius: 1.25rem;
   width: 36rem;
   min-height: 48rem;
-`
+`;
 
 const NameWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`
+`;
 
 const InfoContent = styled.div`
   margin: 1.5rem;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const ProfileImg = styled.img`
   width: 12rem;
   height: 12rem;
   border-radius: 50%;
   margin: 1rem;
-`
+`;
 
 const Label = styled.label`
   font-weight: bold;
@@ -69,11 +73,11 @@ const Label = styled.label`
   &:hover {
     color: #650fa9;
   }
-`
+`;
 
 const Profile = styled.input`
   display: none;
-`
+`;
 
 const Role = styled.select`
   display: flex;
@@ -84,7 +88,7 @@ const Role = styled.select`
   border: 1px solid #bdbdbd;
   text-indent: 1rem;
   font-weight: 300;
-`
+`;
 
 const Update = styled.div`
   display: flex;
@@ -102,27 +106,27 @@ const Update = styled.div`
   &:hover {
     background-color: #bdbdbd;
   }
-`
+`;
 
 const Lower = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-`
+`;
 
 const Content = styled.div`
   display: flex;
   align-items: center;
   margin-top: 0.625rem;
-`
+`;
 
 const Title = styled.div`
   width: 8rem;
   font-size: 1.55rem;
   font-weight: bold;
   margin-right: 1.25rem;
-`
+`;
 
 const EditInput = styled.input`
   display: flex;
@@ -132,42 +136,44 @@ const EditInput = styled.input`
   border-radius: 5px;
   border: 1px solid #bdbdbd;
   text-indent: 1rem;
-`
+`;
 
 const partList = [
   { value: 'MENTOR', name: 'MENTOR' },
   { value: 'MENTEE', name: 'MENTEE' },
-]
+];
 
 function UpdateProfilePage() {
-  const { apiUrl } = useApiUrlStore()
-  const { profileData, setProfileData } = useProfileDataStore()
+  const { apiUrl } = useApiUrlStore();
+  const { profileData, setProfileData } = useProfileDataStore();
 
   //프로필 수정
-  const [name, setName] = useState(profileData.name)
-  const [part, setPart] = useState(profileData.part)
-  const [nickname, setNickName] = useState(profileData.nickname)
-  const [blogUrl, setBlogUrl] = useState(profileData.blogUrl)
-  const [pr, setPr] = useState(profileData.publicRelations)
-  const [interests, setInterests] = useState(profileData.interests)
-  const [expertiseField, setExpertiseField] = useState(profileData.expertiseField)
-  const [job, setJob] = useState(profileData.job)
-  const profileImg = getImageImageUrl(profileData.imageUrl, defaultImg)
+  const [name, setName] = useState(profileData.name);
+  const [part, setPart] = useState(profileData.part);
+  const [nickname, setNickName] = useState(profileData.nickname);
+  const [blogUrl, setBlogUrl] = useState(profileData.blogUrl);
+  const [pr, setPr] = useState(profileData.publicRelations);
+  const [interests, setInterests] = useState(profileData.interests);
+  const [expertiseField, setExpertiseField] = useState(
+    profileData.expertiseField,
+  );
+  const [job, setJob] = useState(profileData.job);
+  const profileImg = getImageImageUrl(profileData.imageUrl, defaultImg);
 
   const getProfile = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.get(`${apiUrl}/user`, {
         headers: { Authorization: `Bearer ${access}` },
-      })
+      });
 
-      setProfileData(response.data)
+      setProfileData(response.data);
     } catch (error) {}
-  }
+  };
 
   useEffect(() => {
-    getProfile()
-  }, [])
+    getProfile();
+  }, []);
 
   //프로필수정
   const updateProfile = async () => {
@@ -180,38 +186,38 @@ function UpdateProfilePage() {
       interests: interests,
       expertiseField: expertiseField,
       job: job,
-    }
+    };
 
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.put(`${apiUrl}/user`, editprofile, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      setProfileData(response.data)
-      alert('수정되었습니다')
+      });
+      setProfileData(response.data);
+      alert('수정되었습니다');
     } catch (error) {}
-  }
+  };
 
   //프로필 사진 업로드
   const postProfileImg = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      let selectedFile = e.target.files?.[0] || defaultImg
-      const formData = new FormData()
-      formData.append('image', selectedFile)
+      let selectedFile = e.target.files?.[0] || defaultImg;
+      const formData = new FormData();
+      formData.append('image', selectedFile);
 
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.put(`${apiUrl}/image/upload`, formData, {
         headers: {
           Authorization: `Bearer ${access}`,
           'Content-Type': 'multipart/form-data',
         },
-      })
-      setProfileData({ ...profileData, imageUrl: response.data.s3Url })
-      console.log('프로필 이미지가 업로드 되었습니다')
+      });
+      setProfileData({ ...profileData, imageUrl: response.data.s3Url });
+      console.log('프로필 이미지가 업로드 되었습니다');
     } catch (error) {
-      console.error('프로필 이미지 업로드에 실패했습니다:', error)
+      console.error('프로필 이미지 업로드에 실패했습니다:', error);
     }
-  }
+  };
 
   return (
     <div>
@@ -225,7 +231,12 @@ function UpdateProfilePage() {
               <NameWrapper>
                 <ProfileImg src={profileImg} />
                 <Label htmlFor="profileimg">프로필 이미지 변경</Label>
-                <Profile type="file" accept="image/*" id="profileimg" onChange={postProfileImg} />
+                <Profile
+                  type="file"
+                  accept="image/*"
+                  id="profileimg"
+                  onChange={postProfileImg}
+                />
               </NameWrapper>
               <InfoContent>
                 <Content>
@@ -242,7 +253,8 @@ function UpdateProfilePage() {
                   <Role
                     name="part"
                     value={profileData.part}
-                    onChange={(e) => setPart(e.target.value)}>
+                    onChange={(e) => setPart(e.target.value)}
+                  >
                     {partList.map((item) => (
                       <option value={item.value} key={item.name}>
                         {item.name}
@@ -314,7 +326,7 @@ function UpdateProfilePage() {
         </ProfileWrapper>
       </Container>
     </div>
-  )
+  );
 }
 
-export default UpdateProfilePage
+export default UpdateProfilePage;

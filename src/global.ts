@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import PretendardBlack from './assets/fonts/Pretendard-Black.woff'
+import { createGlobalStyle } from 'styled-components';
+import PretendardBlack from './assets/fonts/Pretendard-Black.woff';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -12,4 +12,4 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'PretendardBlack', sans-serif; 
   }
-`
+`;

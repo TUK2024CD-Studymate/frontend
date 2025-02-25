@@ -1,14 +1,18 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { IoIosContacts, IoMdHeartEmpty, IoMdStar } from 'react-icons/io'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import Loading from '../../assets/images/Loading.gif'
-import { useApiUrlStore, useReviewListStore, useUserListStore } from '../../store/store'
-import ReviewModal from './ReviewModal'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { IoIosContacts, IoMdHeartEmpty, IoMdStar } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Loading from '../../assets/images/Loading.gif';
+import {
+  useApiUrlStore,
+  useReviewListStore,
+  useUserListStore,
+} from '../../store/store';
+import ReviewModal from './ReviewModal';
 
 interface TruncatedContentProps {
-  expanded: boolean
+  expanded: boolean;
 }
 
 const Container = styled.div`
@@ -24,7 +28,7 @@ const Container = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 1.25rem;
-`
+`;
 
 const LeftWrap = styled.div`
   display: flex;
@@ -32,44 +36,44 @@ const LeftWrap = styled.div`
   height: 100%;
   flex: 3;
   margin-right: 3rem;
-`
+`;
 
 const ImgWrap = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const ProfileImg = styled.img`
   width: 10rem;
   height: 10rem;
   margin-top: 1.25rem;
-`
+`;
 
 const InfoWrap = styled.div`
   display: flex;
   flex: 3;
   flex-direction: column;
-`
+`;
 
 const Section = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 const BigTitle = styled.div`
   display: flex;
   font-size: 2.5rem;
   font-weight: bold;
   margin: 0.5rem;
-`
+`;
 
 const BigContent = styled.div`
   display: flex;
   font-size: 2rem;
   font-weight: bold;
   margin: 0.5rem;
-`
+`;
 
 const Review = styled.div`
   display: flex;
@@ -78,21 +82,21 @@ const Review = styled.div`
   margin: 0.5rem;
   text-decoration: underline;
   cursor: pointer;
-`
+`;
 
 const Title = styled.div`
   display: flex;
   font-size: 1.25rem;
   font-weight: bold;
   margin: 0.5rem;
-`
+`;
 
 const Content = styled.div`
   display: flex;
   font-size: 1.25rem;
   font-weight: bold;
   margin: 0.5rem;
-`
+`;
 
 const TruncatedContent = styled.div<TruncatedContentProps>`
   font-size: 1.25rem;
@@ -106,7 +110,7 @@ const TruncatedContent = styled.div<TruncatedContentProps>`
   -webkit-line-clamp: ${(props) => (props.expanded ? 'none' : '2')};
   max-height: ${(props) => (props.expanded ? 'none' : '3.6em')};
   cursor: pointer;
-`
+`;
 
 const Detail = styled.div`
   display: flex;
@@ -114,7 +118,7 @@ const Detail = styled.div`
   font-weight: bold;
   margin: 0.5rem;
   cursor: pointer;
-`
+`;
 
 const RightWrap = styled.div`
   display: flex;
@@ -124,28 +128,28 @@ const RightWrap = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const Upper = styled.div`
   width: 27.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const ReputationWrap = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const LikeWrap = styled.div`
   display: flex;
-`
+`;
 
 const Lower = styled.div`
   width: 27.5rem;
   display: flex;
-`
+`;
 
 const RequestBtn = styled.button`
   display: flex;
@@ -164,128 +168,141 @@ const RequestBtn = styled.button`
   &:hover {
     background: #e0cfee;
   }
-`
+`;
 
 const LoadingIMG = styled.div`
   margin-top: 5rem;
-`
+`;
 
 function SelectUser(id: any) {
-  const { apiUrl } = useApiUrlStore()
-  const { userList, setUserList } = useUserListStore()
-  const { setReviewList } = useReviewListStore()
+  const { apiUrl } = useApiUrlStore();
+  const { userList, setUserList } = useUserListStore();
+  const { setReviewList } = useReviewListStore();
   // const { isAiBased } = useIsAiBasedStore()
-  const [clickedUsername, setClickedUsername] = useState<string>() // 클릭한 유저 정보
+  const [clickedUsername, setClickedUsername] = useState<string>(); // 클릭한 유저 정보
 
-  const [expandedUsers, setExpandedUsers] = useState<{ [key: number]: boolean }>({}) // 각 유저의 클릭 여부 상태
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [expandedDescriptions, setExpandedDescriptions] = useState<{ [key: number]: boolean }>({})
+  const [expandedUsers, setExpandedUsers] = useState<{
+    [key: number]: boolean;
+  }>({}); // 각 유저의 클릭 여부 상태
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<{
+    [key: number]: boolean;
+  }>({});
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // 질문 폼 정보 디코딩
-  const encodedValue = JSON.stringify(id)
-  const decodedValue = decodeURIComponent(encodedValue)
-  const parsedObject = JSON.parse(decodedValue)
-  const question_id = parsedObject.id
+  const encodedValue = JSON.stringify(id);
+  const decodedValue = decodeURIComponent(encodedValue);
+  const parsedObject = JSON.parse(decodedValue);
+  const question_id = parsedObject.id;
 
   // ai 여부확인
-  const path = id.pathInfo
+  const path = id.pathInfo;
 
   // 멘토 리스트 조회(KMP, AI)
   const getUserList = async () => {
-    const access = localStorage.getItem('accessToken')
-    setIsLoading(true)
+    const access = localStorage.getItem('accessToken');
+    setIsLoading(true);
 
     if (access) {
       try {
-        const response = await axios.get(`${apiUrl}/matching/keyword/${path}${question_id}`, {
-          headers: { Authorization: `Bearer ${access}` },
-        })
-        setUserList(response.data)
+        const response = await axios.get(
+          `${apiUrl}/matching/keyword/${path}${question_id}`,
+          {
+            headers: { Authorization: `Bearer ${access}` },
+          },
+        );
+        setUserList(response.data);
       } catch (error) {
-        console.error('Error ', error)
+        console.error('Error ', error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
-  }
+  };
 
   // 카카오 알림톡 매칭 요청
   const onRequestMatching = async (mentorId: number) => {
-    const access = localStorage.getItem('accessToken')
+    const access = localStorage.getItem('accessToken');
     if (access) {
       try {
-        const response = await axios.get(`${apiUrl}/matching/kakao/${question_id}/${mentorId}`, {
-          headers: { Authorization: `Bearer ${access}` },
-        })
-        console.log('매칭요청발송')
-        console.log(response.data)
+        const response = await axios.get(
+          `${apiUrl}/matching/kakao/${question_id}/${mentorId}`,
+          {
+            headers: { Authorization: `Bearer ${access}` },
+          },
+        );
+        console.log('매칭요청발송');
+        console.log(response.data);
       } catch (error) {
-        console.error('Error ', error)
+        console.error('Error ', error);
       }
     } else {
-      console.error('Access token not found.')
+      console.error('Access token not found.');
     }
-  }
+  };
 
   useEffect(() => {
-    console.log(path)
-    getUserList()
-  }, [])
+    console.log(path);
+    getUserList();
+  }, []);
 
   const handleRequestMatching = async (mentorId: number) => {
-    await onRequestMatching(mentorId)
-    alert('요청되었습니다.')
-    navigate('/chats')
-  }
+    await onRequestMatching(mentorId);
+    alert('요청되었습니다.');
+    navigate('/chats');
+  };
 
   // 해당 멘토 리뷰 조회
   const getReviewList = async (mentorId: number) => {
-    const access = localStorage.getItem('accessToken')
+    const access = localStorage.getItem('accessToken');
     if (access) {
       try {
-        const response = await axios.get(`${apiUrl}/matching/review/${mentorId}`, {
-          headers: { Authorization: `Bearer ${access}` },
-        })
-        setReviewList(response.data.reviewResponses)
+        const response = await axios.get(
+          `${apiUrl}/matching/review/${mentorId}`,
+          {
+            headers: { Authorization: `Bearer ${access}` },
+          },
+        );
+        setReviewList(response.data.reviewResponses);
       } catch (error) {
-        console.error('Error ', error)
+        console.error('Error ', error);
       }
     } else {
-      console.error('Access token not found.')
+      console.error('Access token not found.');
     }
-  }
+  };
 
   const handleGetReviewList = (mentorId: number) => {
-    getReviewList(mentorId)
-  }
+    getReviewList(mentorId);
+  };
 
   // 유저를 클릭했을 때 해당 유저의 클릭 여부 상태를 변경
   const handleUserClick = (userId: number) => {
     setExpandedUsers((prevState) => ({
       ...prevState,
       [userId]: !prevState[userId], // 해당 유저의 상태를 토글
-    }))
-  }
+    }));
+  };
 
   const openModal = () => {
-    setIsModalOpen(true)
-  }
+    setIsModalOpen(true);
+  };
 
   const closeModal = () => {
-    setIsModalOpen(false)
-  }
+    setIsModalOpen(false);
+  };
 
   // 텍스트 확장/축소를 토글하는 함수
   const toggleExpand = (id: number) => {
     setExpandedDescriptions((prev) => ({
       ...prev,
       [id]: !prev[id],
-    }))
-  }
+    }));
+  };
 
   return (
     <div>
@@ -299,7 +316,9 @@ function SelectUser(id: any) {
             <LeftWrap>
               <ImgWrap>
                 <ProfileImg src={user.imageUrl} />
-                <BigContent>{user.matchingPercent ? `${user.matchingPercent}%` : ''}</BigContent>
+                <BigContent>
+                  {user.matchingPercent ? `${user.matchingPercent}%` : ''}
+                </BigContent>
               </ImgWrap>
               <InfoWrap>
                 <Section>
@@ -312,7 +331,9 @@ function SelectUser(id: any) {
                   <Title>분야</Title>
                   <Content>{user.interests}</Content>
                   {expandedUsers[user.id] ? (
-                    <Detail onClick={() => handleUserClick(user.id)}>{user.expertiseField}</Detail>
+                    <Detail onClick={() => handleUserClick(user.id)}>
+                      {user.expertiseField}
+                    </Detail>
                   ) : (
                     <Detail onClick={() => handleUserClick(user.id)}>
                       {user.expertiseField.length > 8
@@ -336,7 +357,8 @@ function SelectUser(id: any) {
                 <Section>
                   <TruncatedContent
                     onClick={() => toggleExpand(user.id)}
-                    expanded={expandedDescriptions[user.id]}>
+                    expanded={expandedDescriptions[user.id]}
+                  >
                     {user.publicRelations}
                   </TruncatedContent>
                 </Section>
@@ -351,10 +373,11 @@ function SelectUser(id: any) {
                     <Content>/</Content>
                     <Review
                       onClick={() => {
-                        openModal()
-                        handleGetReviewList(user.id)
-                        setClickedUsername(user.name)
-                      }}>
+                        openModal();
+                        handleGetReviewList(user.id);
+                        setClickedUsername(user.name);
+                      }}
+                    >
                       리뷰 {user.reviewCount}
                     </Review>
                   </Section>
@@ -365,18 +388,24 @@ function SelectUser(id: any) {
                 </LikeWrap>
               </Upper>
               <Lower>
-                <RequestBtn onClick={() => handleRequestMatching(user.id)}>매칭 요청</RequestBtn>
+                <RequestBtn onClick={() => handleRequestMatching(user.id)}>
+                  매칭 요청
+                </RequestBtn>
               </Lower>
             </RightWrap>
             {/* 리뷰 모달창 */}
             {clickedUsername && (
-              <ReviewModal isOpen={isModalOpen} onClose={closeModal} userName={clickedUsername} />
+              <ReviewModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                userName={clickedUsername}
+              />
             )}
           </Container>
         ))
       )}
     </div>
-  )
+  );
 }
 
-export default SelectUser
+export default SelectUser;

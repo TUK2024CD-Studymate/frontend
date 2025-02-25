@@ -1,14 +1,14 @@
-import styled from 'styled-components'
-import Modal from 'react-modal'
-import { PiStar, PiStarFill } from 'react-icons/pi'
-import { useState } from 'react'
-import axios from 'axios'
-import { useApiUrlStore } from '../../store/store'
+import styled from 'styled-components';
+import Modal from 'react-modal';
+import { PiStar, PiStarFill } from 'react-icons/pi';
+import { useState } from 'react';
+import axios from 'axios';
+import { useApiUrlStore } from 'store/store';
 
 interface ReviewModalProps {
-  isOpen: boolean
-  onClose: () => void
-  mentorId?: string
+  isOpen: boolean;
+  onClose: () => void;
+  mentorId?: string;
 }
 
 const Header = styled.div`
@@ -18,7 +18,7 @@ const Header = styled.div`
   margin: 0 auto;
   margin-top: 0.625rem;
   margin-bottom: 1.25rem;
-`
+`;
 
 const MainWrap = styled.div`
   display: flex;
@@ -28,13 +28,13 @@ const MainWrap = styled.div`
   width: 100%;
   margin: 0 auto;
   height: 100%;
-`
+`;
 
 const Text = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
   color: #666666;
-`
+`;
 
 const Button = styled.button<{ isActive?: boolean }>`
   display: flex;
@@ -53,7 +53,7 @@ const Button = styled.button<{ isActive?: boolean }>`
   &:hover {
     background-color: #dcd6eb;
   }
-`
+`;
 
 const RateWrap = styled.div`
   display: flex;
@@ -61,15 +61,15 @@ const RateWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 1.25rem;
-`
+`;
 const StarWrap = styled.div`
   display: flex;
-`
+`;
 
 const StarIcon = styled.div`
   cursor: pointer;
   margin: 0.625rem;
-`
+`;
 
 const SolvedWrap = styled.div`
   display: flex;
@@ -77,11 +77,11 @@ const SolvedWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 1.25rem;
-`
+`;
 
 const ButtonWrap = styled.div`
   display: flex;
-`
+`;
 
 const LikeWrap = styled.div`
   display: flex;
@@ -89,7 +89,7 @@ const LikeWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 1.25rem;
-`
+`;
 
 const InputTitle = styled.input`
   margin-top: 2.5rem;
@@ -101,7 +101,7 @@ const InputTitle = styled.input`
   padding: 0.625rem;
   font-size: 1.25rem;
   background-color: #f6f6f6;
-`
+`;
 
 const InputContent = styled.textarea`
   width: 43.75rem;
@@ -112,12 +112,12 @@ const InputContent = styled.textarea`
   font-size: 1.25rem;
   background-color: #f6f6f6;
   resize: none;
-`
+`;
 
 const ConfirmWrap = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 const RegisterBtn = styled.button`
   display: flex;
   justify-content: center;
@@ -130,7 +130,7 @@ const RegisterBtn = styled.button`
   background-color: #e8dcf2;
   color: #650fa9;
   margin: 1.8rem 1.25rem 0rem 1.25rem;
-`
+`;
 
 const CancelBtn = styled.button`
   display: flex;
@@ -145,10 +145,10 @@ const CancelBtn = styled.button`
   border: solid 1px #bdbdbd;
   color: #000000;
   margin: 1.8rem 1.25rem 0rem 1.25rem;
-`
+`;
 
 function CreateReviewModal({ isOpen, onClose, mentorId }: ReviewModalProps) {
-  const { apiUrl } = useApiUrlStore()
+  const { apiUrl } = useApiUrlStore();
 
   const [postData, setPostData] = useState({
     title: '',
@@ -156,32 +156,32 @@ function CreateReviewModal({ isOpen, onClose, mentorId }: ReviewModalProps) {
     star: 0,
     isSolved: false,
     heart: false,
-  })
+  });
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setPostData((prevData: any) => ({
       ...prevData,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleBooleanChange = (name: any, value: any) => {
-    setPostData((prev: any) => ({ ...prev, [name]: value }))
-  }
+    setPostData((prev: any) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       await axios.post(`${apiUrl}/review/${mentorId}`, postData, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      alert('리뷰를 작성하였습니다.')
-      onClose()
+      });
+      alert('리뷰를 작성하였습니다.');
+      onClose();
     } catch (error) {
-      alert('error')
+      alert('error');
     }
-  }
+  };
 
   return (
     <Modal
@@ -204,7 +204,8 @@ function CreateReviewModal({ isOpen, onClose, mentorId }: ReviewModalProps) {
           borderRadius: '20px',
           borderColor: '#ffffff',
         },
-      }}>
+      }}
+    >
       <Header>매칭 후기를 작성해주세요</Header>
       <MainWrap>
         <RateWrap>
@@ -212,11 +213,17 @@ function CreateReviewModal({ isOpen, onClose, mentorId }: ReviewModalProps) {
           <StarWrap>
             {[...Array(5)].map((_, index) =>
               index < postData.star ? (
-                <StarIcon key={index} onClick={() => handleBooleanChange('star', index + 1)}>
+                <StarIcon
+                  key={index}
+                  onClick={() => handleBooleanChange('star', index + 1)}
+                >
                   <PiStarFill size={36} />
                 </StarIcon>
               ) : (
-                <StarIcon key={index} onClick={() => handleBooleanChange('star', index + 1)}>
+                <StarIcon
+                  key={index}
+                  onClick={() => handleBooleanChange('star', index + 1)}
+                >
                   <PiStar size={36} />
                 </StarIcon>
               ),
@@ -228,12 +235,14 @@ function CreateReviewModal({ isOpen, onClose, mentorId }: ReviewModalProps) {
           <ButtonWrap>
             <Button
               isActive={postData.isSolved}
-              onClick={() => handleBooleanChange('isSolved', true)}>
+              onClick={() => handleBooleanChange('isSolved', true)}
+            >
               해결 되었어요
             </Button>
             <Button
               isActive={!postData.isSolved}
-              onClick={() => handleBooleanChange('isSolved', false)}>
+              onClick={() => handleBooleanChange('isSolved', false)}
+            >
               해결 못했어요
             </Button>
           </ButtonWrap>
@@ -241,23 +250,37 @@ function CreateReviewModal({ isOpen, onClose, mentorId }: ReviewModalProps) {
         <LikeWrap>
           <Text>매칭이 맘에 들었나요 ?</Text>
           <ButtonWrap>
-            <Button isActive={postData.heart} onClick={() => handleBooleanChange('heart', true)}>
+            <Button
+              isActive={postData.heart}
+              onClick={() => handleBooleanChange('heart', true)}
+            >
               네
             </Button>
-            <Button isActive={!postData.heart} onClick={() => handleBooleanChange('heart', false)}>
+            <Button
+              isActive={!postData.heart}
+              onClick={() => handleBooleanChange('heart', false)}
+            >
               아니요
             </Button>
           </ButtonWrap>
         </LikeWrap>
-        <InputTitle name="title" placeholder="제목을 적어주세요" onChange={handleInputChange} />
-        <InputContent name="content" placeholder="내용을 적어주세요" onChange={handleInputChange} />
+        <InputTitle
+          name="title"
+          placeholder="제목을 적어주세요"
+          onChange={handleInputChange}
+        />
+        <InputContent
+          name="content"
+          placeholder="내용을 적어주세요"
+          onChange={handleInputChange}
+        />
         <ConfirmWrap>
           <RegisterBtn onClick={handleSubmit}>등록</RegisterBtn>
           <CancelBtn onClick={onClose}>취소</CancelBtn>
         </ConfirmWrap>
       </MainWrap>
     </Modal>
-  )
+  );
 }
 
-export default CreateReviewModal
+export default CreateReviewModal;

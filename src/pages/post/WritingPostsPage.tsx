@@ -1,15 +1,15 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import Header from '../../components/Header.tsx'
-import { useApiUrlStore } from '../../store/store.ts'
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../../components/Header.tsx';
+import { useApiUrlStore } from '../../store/store.ts';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 3rem;
-`
+`;
 
 const AllWrapper = styled.div`
   display: flex;
@@ -19,17 +19,17 @@ const AllWrapper = styled.div`
   border-left: 1px solid #d8d8d8;
   border-right: 1px solid #d8d8d8;
   padding: 0rem 6.25rem 0rem 6.25rem;
-`
+`;
 
 const Upper = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;
   padding: 1rem;
-`
+`;
 
 const SelectBtn = styled.button`
   width: 16rem;
@@ -46,12 +46,12 @@ const SelectBtn = styled.button`
     color: #650fa9;
     border-bottom: 2px solid #bdbdbd;
   }
-`
+`;
 const SerchWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
-`
+`;
 const InterestsSelect = styled.select`
   width: 10rem;
   height: 4rem;
@@ -63,14 +63,14 @@ const InterestsSelect = styled.select`
   border-radius: 0.625rem;
   border: 1px solid #d8d8d8;
   color: #650fa9;
-`
+`;
 
 const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 62.5rem;
   padding: 1rem;
-`
+`;
 const PostTitle = styled.input`
   flex: 1;
   font-size: 2.6rem;
@@ -82,7 +82,7 @@ const PostTitle = styled.input`
   }
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-`
+`;
 const PostContent = styled.textarea`
   font-size: 1.75rem;
   font-weight: 600;
@@ -95,14 +95,14 @@ const PostContent = styled.textarea`
   &::placeholder {
     color: #bdbdbd;
   }
-`
+`;
 const FooterWrapper = styled.div`
   display: flex;
   flex: 1;
   justify-content: end;
   margin-top: 2rem;
   margin-bottom: 2rem;
-`
+`;
 const PostBtn = styled.button`
   font-size: 1.75rem;
   width: 10rem;
@@ -122,25 +122,25 @@ const PostBtn = styled.button`
   &:active {
     background: #dad9d9;
   }
-`
+`;
 const interestsList = [
   { value: 'WEBAPP', name: '웹/앱개발' },
   { value: 'SERVER', name: '서버/네트워크' },
   { value: 'AI', name: 'AI/IoT' },
   { value: 'DATA', name: '데이터 개발' },
   { value: 'SECURITY', name: '정보보안' },
-]
+];
 
 export default function WritingPostPage() {
-  const [title, SetTitle] = useState('')
-  const [content, SetContent] = useState('')
-  const [interests, SetInterests] = useState('관심분야')
-  const [category, SetCategory] = useState('')
-  const { apiUrl } = useApiUrlStore()
-  const navigate = useNavigate()
+  const [title, SetTitle] = useState('');
+  const [content, SetContent] = useState('');
+  const [interests, SetInterests] = useState('관심분야');
+  const [category, SetCategory] = useState('');
+  const { apiUrl } = useApiUrlStore();
+  const navigate = useNavigate();
 
   const CreatePost = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const postData = {
       title: title,
@@ -148,27 +148,27 @@ export default function WritingPostPage() {
       category: category,
       interests: interests,
       recruitmentStatus: true,
-    }
+    };
     if (category === '' || interests === '' || title === '' || content === '') {
-      alert(' 입력정보를 다시 확인해주세요.')
-      return
+      alert(' 입력정보를 다시 확인해주세요.');
+      return;
     }
 
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.post(`${apiUrl}/posts`, postData, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      navigate('/posts')
-      console.log(response.data)
+      });
+      navigate('/posts');
+      console.log(response.data);
     } catch (error) {
-      alert('error')
+      alert('error');
     }
-  }
+  };
 
   const BacktoPost = () => {
-    navigate('/posts')
-  }
+    navigate('/posts');
+  };
 
   return (
     <div>
@@ -180,30 +180,36 @@ export default function WritingPostPage() {
               <SelectBtn
                 className={`btn ${category === 'FREE' ? 'category' : ''}`}
                 onClick={() => {
-                  SetCategory('FREE')
+                  SetCategory('FREE');
                 }}
-                value={category}>
+                value={category}
+              >
                 자유게시판
               </SelectBtn>
               <SelectBtn
                 className={`btn ${category === 'QUESTION' ? 'category' : ''}`}
                 onClick={() => {
-                  SetCategory('QUESTION')
+                  SetCategory('QUESTION');
                 }}
-                value={category}>
+                value={category}
+              >
                 질문게시판
               </SelectBtn>
               <SelectBtn
                 className={`btn ${category === 'STUDY' ? 'category' : ''}`}
                 onClick={() => {
-                  SetCategory('STUDY')
+                  SetCategory('STUDY');
                 }}
-                value={category}>
+                value={category}
+              >
                 스터디게시판
               </SelectBtn>
             </ButtonWrapper>
             <SerchWrapper>
-              <InterestsSelect value={interests} onChange={(e) => SetInterests(e.target.value)}>
+              <InterestsSelect
+                value={interests}
+                onChange={(e) => SetInterests(e.target.value)}
+              >
                 <option disabled hidden>
                   관심분야
                 </option>
@@ -237,5 +243,5 @@ export default function WritingPostPage() {
         </AllWrapper>
       </Container>
     </div>
-  )
+  );
 }

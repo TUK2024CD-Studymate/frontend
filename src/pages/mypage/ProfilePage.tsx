@@ -1,23 +1,23 @@
-import axios from 'axios'
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import defaultImg from '../../assets/images/profileimg.png'
-import Header from '../../components/Header.tsx'
-import Navbar from '../../components/Navbar.tsx'
-import Profilebar from '../../components/sidebar/Profilebar.tsx'
-import Skeleton from '../../components/skeleton/MyPageSkeletonUI.tsx'
+import axios from 'axios';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import defaultImg from '../../assets/images/profileimg.png';
+import Header from '../../components/Header.tsx';
+import Navbar from '../../components/Navbar.tsx';
+import Profilebar from '../../shared/components/sidebar/Profilebar.tsx';
+import Skeleton from '../../shared/components/skeleton/MyPageSkeletonUI.tsx';
 import {
   getImageImageUrl,
   useApiUrlStore,
   useLoadingStore,
   useProfileDataStore,
-} from '../../store/store.ts'
+} from '../../store/store.ts';
 
 const Container = styled.div`
   display: flex;
   margin-top: 3rem;
-`
+`;
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const ProfileWrapper = styled.div`
   width: calc(100% - 25rem);
   min-height: 48.75rem;
   border-left: 1px solid #d8d8d8;
-`
+`;
 
 const Upper = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const Upper = styled.div`
   width: calc(100% - 12.5rem);
   padding-left: 3rem;
   padding-right: 4.375rem;
-`
+`;
 
 const ProfileContent = styled.div`
   margin: 0 1.25rem 1.25rem 1.25rem;
@@ -45,13 +45,13 @@ const ProfileContent = styled.div`
   border-radius: 1.25rem;
   width: 36rem;
   min-height: min-content;
-`
+`;
 
 const NameWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`
+`;
 
 const User = styled.div`
   width: 28rem;
@@ -60,32 +60,32 @@ const User = styled.div`
   justify-content: center;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid #e8e8e8;
-`
+`;
 
 const InfoContent = styled.div`
   min-height: min-content;
   margin: 1.5rem 1.5rem 1.5rem 3.5rem;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const Profile = styled.img`
   width: 12rem;
   height: 12rem;
   border-radius: 50%;
   margin: 1rem;
-`
+`;
 
 const Role = styled.div`
   font-size: 2rem;
   font-weight: 300;
-`
+`;
 
 const Nickname = styled.div`
   font-size: 2.5rem;
   margin-right: 1.25rem;
   font-weight: 400;
-`
+`;
 
 const Modify = styled.div`
   display: flex;
@@ -103,30 +103,30 @@ const Modify = styled.div`
   &:hover {
     background-color: #bdbdbd;
   }
-`
+`;
 
 const Lower = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-`
+`;
 
 const ReviewContent = styled.div`
   margin: 1.25rem 1.25rem 2rem 1.25rem;
   display: flex;
   flex-direction: column;
-`
+`;
 const MatchingContent = styled.div`
   margin: 1.25rem;
   display: flex;
   flex-direction: column;
-`
+`;
 const Content = styled.div`
   display: flex;
   align-items: center;
   margin-top: 0.625rem;
-`
+`;
 const Category = styled.div`
   border-bottom: 1px solid #e8e8e8;
   font-size: 2rem;
@@ -135,46 +135,46 @@ const Category = styled.div`
   margin-left: -1.25rem;
   padding-bottom: 0.625rem;
   font-weight: bolder;
-`
+`;
 const Title = styled.div`
   width: 8rem;
   font-size: 1.55rem;
   font-weight: bold;
   margin-right: 1.25rem;
-`
+`;
 
 const Detail = styled.div`
   width: 22rem;
   font-size: 1.5rem;
   font-weight: 300;
-`
+`;
 
 function ProfilePage() {
-  const { apiUrl } = useApiUrlStore()
-  const { profileData, setProfileData } = useProfileDataStore()
-  const { loading, setLoading } = useLoadingStore()
-  const profileImg = getImageImageUrl(profileData.imageUrl, defaultImg)
+  const { apiUrl } = useApiUrlStore();
+  const { profileData, setProfileData } = useProfileDataStore();
+  const { loading, setLoading } = useLoadingStore();
+  const profileImg = getImageImageUrl(profileData.imageUrl, defaultImg);
 
   const getProfile = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.get(`${apiUrl}/user`, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      setLoading(true)
-      setProfileData(response.data)
+      });
+      setLoading(true);
+      setProfileData(response.data);
 
-      const profileurl = response.data.imageUrl
-      const nickname = response.data.nickname
+      const profileurl = response.data.imageUrl;
+      const nickname = response.data.nickname;
 
-      localStorage.setItem('profileUrl', profileurl)
-      localStorage.setItem('nickname', nickname)
+      localStorage.setItem('profileUrl', profileurl);
+      localStorage.setItem('nickname', nickname);
     } catch (error) {}
-  }
+  };
 
   useEffect(() => {
-    getProfile()
-  }, [])
+    getProfile();
+  }, []);
 
   return (
     <div>
@@ -256,7 +256,7 @@ function ProfilePage() {
         </ProfileWrapper>
       </Container>
     </div>
-  )
+  );
 }
 
-export default ProfilePage
+export default ProfilePage;

@@ -1,9 +1,9 @@
-import { useLocation } from 'react-router-dom'
-import styled from 'styled-components'
-import Header from '../../components/Header'
-import SelectUser from '../../components/matching/SelectUser'
-import Navbar from '../../components/Navbar'
-import { useUserListStore } from '../../store/store'
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../../components/Header';
+import SelectUser from '../../components/matching/SelectUser';
+import Navbar from '../../components/Navbar';
+import { useUserListStore } from '../../store/store';
 
 const Container = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const Container = styled.div`
   align-items: center;
   margin: 0 auto;
   flex-direction: column;
-`
+`;
 
 const Text = styled.div`
   display: flex;
@@ -21,13 +21,13 @@ const Text = styled.div`
   font-weight: bold;
   margin-top: 2rem;
   margin-bottom: 1rem;
-`
+`;
 
 function SelectUserPage() {
-  const location = useLocation()
-  const IdInfo = location.state.id
-  const pathInfo = location.state.pathname
-  const { userList } = useUserListStore()
+  const location = useLocation();
+  const IdInfo = location.state.id;
+  const pathInfo = location.state.pathname;
+  const { userList } = useUserListStore();
 
   return (
     <div>
@@ -38,7 +38,7 @@ function SelectUserPage() {
         <SelectUser id={IdInfo} pathInfo={pathInfo} />
       </Container>
     </div>
-  )
+  );
 }
 
-export default SelectUserPage
+export default SelectUserPage;

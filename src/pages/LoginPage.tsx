@@ -1,5 +1,5 @@
-import { styled } from 'styled-components'
-import Login from '../components/Login.tsx'
+import { styled } from 'styled-components';
+import Login from '../components/Login.tsx';
 
 const WhiteSpace = styled.div`
   display: flex;
@@ -8,14 +8,14 @@ const WhiteSpace = styled.div`
   height: 7rem;
   padding-left: 8rem;
   padding-right: 8rem;
-`
+`;
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   height: calc(100vh - 7rem);
-`
+`;
 
 function LoginPage() {
   return (
@@ -25,7 +25,7 @@ function LoginPage() {
         <Login />
       </Container>
     </div>
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

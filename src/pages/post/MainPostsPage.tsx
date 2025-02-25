@@ -1,25 +1,30 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { IoIosHeart, IoIosHeartEmpty, IoIosText, IoMdSearch } from 'react-icons/io'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import DividerImg from '../../assets/images/divider1.png'
-import Header from '../../components/Header.tsx'
-import Navbar from '../../components/Navbar.tsx'
-import PostsBar from '../../components/sidebar/Postsbar.tsx'
-import SkeletonUI from '../../components/skeleton/SkeletonUI.tsx'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import {
+  IoIosHeart,
+  IoIosHeartEmpty,
+  IoIosText,
+  IoMdSearch,
+} from 'react-icons/io';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import DividerImg from '../../assets/images/divider1.png';
+import Header from '../../components/Header.tsx';
+import Navbar from '../../components/Navbar.tsx';
+import PostsBar from '../../shared/components/sidebar/Postsbar.tsx';
+import SkeletonUI from '../../shared/components/skeleton/SkeletonUI.tsx';
 import {
   PostsList,
   useApiUrlStore,
   useFilterListStore,
   useLoadingStore,
   usePostListStore,
-} from '../../store/store.ts'
+} from '../../store/store.ts';
 
 const Container = styled.div`
   display: flex;
   margin-top: 3rem;
-`
+`;
 const FreePostsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,18 +32,18 @@ const FreePostsWrapper = styled.div`
   width: calc(100% - 25rem);
   min-height: 49rem;
   border-left: 1px solid #d8d8d8;
-`
+`;
 
 const Upper = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - 6.25rem);
-`
+`;
 const BtnWrapper = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 0.625rem;
-`
+`;
 const Btn = styled.button<{ active: boolean }>`
   width: 10rem;
   height: 3rem;
@@ -49,7 +54,7 @@ const Btn = styled.button<{ active: boolean }>`
   background-color: ${({ active }) => (active ? '#E8DCF2' : '#e8e8e8')};
   color: ${({ active }) => (active ? '#650FA9' : '#bdbdbd')};
   font-weight: ${({ active }) => (active ? 'bolder' : 'normal')};
-`
+`;
 const SearchWrapper = styled.div`
   height: 5rem;
   display: flex;
@@ -57,14 +62,14 @@ const SearchWrapper = styled.div`
   justify-content: space-between;
   padding: 1.25rem 1.25rem 1.25rem 0rem;
   margin-bottom: 1.25rem;
-`
+`;
 const SideWrapper = styled.div`
   display: flex;
-`
+`;
 const Search = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const Input = styled.input`
   text-indent: 2rem;
@@ -74,7 +79,7 @@ const Input = styled.input`
   border-radius: 0.5rem;
   font-size: 1.3rem;
   margin-right: 2rem;
-`
+`;
 
 const SerarchBtn = styled.div`
   display: flex;
@@ -87,7 +92,7 @@ const SerarchBtn = styled.div`
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
   font-size: 1.25rem;
   cursor: pointer;
-`
+`;
 
 const SelectBox = styled.select`
   width: 8.75rem;
@@ -99,7 +104,7 @@ const SelectBox = styled.select`
   margin-right: 1.25rem;
   cursor: pointer;
   text-align: center;
-`
+`;
 
 const WriteButton = styled.button`
   width: 7.5rem;
@@ -116,7 +121,7 @@ const WriteButton = styled.button`
   &:hover {
     background-color: #bdbdbd;
   }
-`
+`;
 
 const MainPosts = styled(Link)`
   display: flex;
@@ -128,12 +133,12 @@ const MainPosts = styled(Link)`
   justify-content: center;
   text-decoration: none;
   color: black;
-`
+`;
 
 const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
-`
+`;
 
 const Context = styled.div`
   font-size: 1.75rem;
@@ -142,41 +147,41 @@ const Context = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 95%;
-`
+`;
 
 const FooterWrapper = styled.div`
   display: flex;
   margin-top: 1.25rem;
   align-items: center;
-`
+`;
 const Likecount = styled.div`
   font-size: 1.75rem;
   font-weight: bolder;
   margin-right: 0.625rem;
   margin-left: 0.5rem;
-`
+`;
 const CommentCount = styled.div`
   font-size: 1.75rem;
   font-weight: bolder;
   margin-left: 0.5rem;
-`
+`;
 const Divider = styled.img`
   margin: 0rem 1.25rem 0rem 1.25rem;
   width: 2px;
   height: 1.25rem;
-`
+`;
 const DateCreated = styled.div`
   font-size: 1.75rem;
   color: #9b9b9b;
-`
+`;
 const Writer = styled.div`
   font-size: 1.75rem;
   color: #9b9b9b;
-`
+`;
 const Sortoption = [
   { value: 'LIKE', name: '좋아요 순' },
   { value: 'COMMENT', name: '댓글 순' },
-]
+];
 
 const interestLabels: { [key: string]: string } = {
   WEBAPP: '웹/앱개발',
@@ -184,120 +189,126 @@ const interestLabels: { [key: string]: string } = {
   AI: 'AI/IoT',
   DATA: '데이터 개발',
   SECURITY: '정보보안',
-}
+};
 
 function MainPostPage() {
-  const { apiUrl } = useApiUrlStore()
-  const [sortOption, setSortOption] = useState('')
-  const [filterOption, setFilterOption] = useState('')
-  const [searchKeyword, setSearchKeyword] = useState('')
-  const { loading, setLoading } = useLoadingStore()
-  const { filterList, setFilterList } = useFilterListStore()
-  const { postsList, setPostList } = usePostListStore()
-  const [isClicked, setIsClicked] = useState(false)
-  const [isliked, setIsLiked] = useState<{ [postId: string]: boolean }>({})
+  const { apiUrl } = useApiUrlStore();
+  const [sortOption, setSortOption] = useState('');
+  const [filterOption, setFilterOption] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const { loading, setLoading } = useLoadingStore();
+  const { filterList, setFilterList } = useFilterListStore();
+  const { postsList, setPostList } = usePostListStore();
+  const [isClicked, setIsClicked] = useState(false);
+  const [isliked, setIsLiked] = useState<{ [postId: string]: boolean }>({});
 
-  const OnListtHandler = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setSortOption(e.target.value)
-  }
+  const OnListtHandler = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setSortOption(e.target.value);
+  };
 
   //게시글 정렬
   const OnSortpostData = () => {
     const sortList = postsList.slice(0).sort((a, b) => {
       if (sortOption === 'LIKE') {
         //좋아요 순 option을 선택했을 경우
-        return b.likeCount - a.likeCount
+        return b.likeCount - a.likeCount;
       } else if (sortOption === 'COMMENT') {
-        return b.commentCount - a.commentCount
+        return b.commentCount - a.commentCount;
       }
-      return 0
-    })
-    setPostList(sortList)
-  }
+      return 0;
+    });
+    setPostList(sortList);
+  };
 
   //게시글 전체조회
   const getPost = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       if (!access) {
-        window.alert('로그인을해주세요.')
-        return
+        window.alert('로그인을해주세요.');
+        return;
       }
       const response = await axios.get(`${apiUrl}/posts`, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      setPostList(response.data.reverse())
-      setLoading(true)
+      });
+      setPostList(response.data.reverse());
+      setLoading(true);
     } catch (error) {
-      alert('Error while fetching post')
+      alert('Error while fetching post');
     }
-  }
+  };
 
   useEffect(() => {
-    getPost()
-  }, [])
+    getPost();
+  }, []);
 
   //게시글 검색
   const searchpost = async () => {
     if (searchKeyword !== '') {
       try {
-        const access = localStorage.getItem('accessToken')
+        const access = localStorage.getItem('accessToken');
         const response = await axios.get(`${apiUrl}/posts/search`, {
           params: { keyword: searchKeyword },
           headers: { Authorization: `Bearer ${access}` },
-        })
-        setPostList(response.data)
+        });
+        setPostList(response.data);
       } catch (error) {
-        alert('Error while searching keyword')
+        alert('Error while searching keyword');
       }
     } else if (searchKeyword == '') {
-      alert('검색어를 입력해주세요')
-      getPost() //검색어 입력 안했을 경우 전체게시물 불러오기 >> 이미 검색한 이후 다른 단어로 검색해도 게시글이 출력될 수 있게
+      alert('검색어를 입력해주세요');
+      getPost(); //검색어 입력 안했을 경우 전체게시물 불러오기 >> 이미 검색한 이후 다른 단어로 검색해도 게시글이 출력될 수 있게
     }
-  }
+  };
 
   //게시글 필터링
   const OnFilter = (interests: string) => {
     if (isClicked && filterOption == interests) {
       // 이미 선택된 버튼인지 확인
-      setIsClicked(false) // 이미 선택된 버튼을 다시 눌렀을 때 전체 조회로 변경
-      setFilterList([])
+      setIsClicked(false); // 이미 선택된 버튼을 다시 눌렀을 때 전체 조회로 변경
+      setFilterList([]);
     } else {
-      setIsClicked(true) // true로 변경하여 filterPost를 map하게 함
-      const filterPost = postsList.filter((post) => post.interests === interests) // 복사된 값에서 filter
-      setFilterList(filterPost)
-      setFilterOption(interests)
+      setIsClicked(true); // true로 변경하여 filterPost를 map하게 함
+      const filterPost = postsList.filter(
+        (post) => post.interests === interests,
+      ); // 복사된 값에서 filter
+      setFilterList(filterPost);
+      setFilterOption(interests);
     }
-  }
+  };
 
   //좋아요 누른 게시글인지 확인
   const LikedPost = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.get(`${apiUrl}/user/post/heart`, {
         headers: { Authorization: `Bearer ${access}` },
-      })
+      });
 
-      const likedPostIds = response.data.map((likedPost: any) => likedPost.post_id)
-      const newLikedMap: { [postId: string]: boolean } = {}
+      const likedPostIds = response.data.map(
+        (likedPost: any) => likedPost.post_id,
+      );
+      const newLikedMap: { [postId: string]: boolean } = {};
       likedPostIds.forEach((postId: string) => {
-        newLikedMap[postId] = true
-      })
-      setIsLiked(newLikedMap)
+        newLikedMap[postId] = true;
+      });
+      setIsLiked(newLikedMap);
     } catch (error) {
-      alert('Error while liking post')
+      alert('Error while liking post');
     }
-  }
+  };
 
   useEffect(() => {
-    LikedPost()
-  }, [])
+    LikedPost();
+  }, []);
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      searchpost()
+      searchpost();
     }
-  }
+  };
 
   const Post = ({ posts }: { posts: PostsList[] }) => (
     <>
@@ -324,7 +335,7 @@ function MainPostPage() {
           </MainPosts>
         ))}
     </>
-  )
+  );
 
   return (
     <div>
@@ -338,8 +349,12 @@ function MainPostPage() {
               {Object.keys(interestLabels).map((interest) => (
                 <Btn
                   key={interest}
-                  active={isClicked && filterList.some((post) => post.interests === interest)}
-                  onClick={() => OnFilter(interest)}>
+                  active={
+                    isClicked &&
+                    filterList.some((post) => post.interests === interest)
+                  }
+                  onClick={() => OnFilter(interest)}
+                >
                   {interestLabels[interest]}
                 </Btn>
               ))}
@@ -358,7 +373,11 @@ function MainPostPage() {
                 </SerarchBtn>
               </Search>
               <SideWrapper>
-                <SelectBox value={sortOption} onChange={OnListtHandler} onClick={OnSortpostData}>
+                <SelectBox
+                  value={sortOption}
+                  onChange={OnListtHandler}
+                  onClick={OnSortpostData}
+                >
                   {Sortoption.map((item) => (
                     <option value={item.value} key={item.name}>
                       {item.name}
@@ -371,10 +390,14 @@ function MainPostPage() {
               </SideWrapper>
             </SearchWrapper>
           </Upper>
-          {loading ? <Post posts={isClicked ? filterList : postsList} /> : <SkeletonUI />}
+          {loading ? (
+            <Post posts={isClicked ? filterList : postsList} />
+          ) : (
+            <SkeletonUI />
+          )}
         </FreePostsWrapper>
       </Container>
     </div>
-  )
+  );
 }
-export default MainPostPage
+export default MainPostPage;
