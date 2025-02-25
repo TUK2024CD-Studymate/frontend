@@ -1,10 +1,10 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 export const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ export const LoginWrapper = styled.div`
   border-radius: 1.25rem;
   border: 1px solid var(--Gray-03, #bdbdbd);
   margin-bottom: 7rem;
-`
+`;
 
 export const LoginH2 = styled.h2`
   width: 75%;
@@ -26,7 +26,7 @@ export const LoginH2 = styled.h2`
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 5rem;
-`
+`;
 
 export const LoginInput = styled.input`
   text-indent: 1.25rem;
@@ -37,7 +37,7 @@ export const LoginInput = styled.input`
   border-radius: 0.625rem;
   margin: 0.625rem;
   font-size: 1.25rem;
-`
+`;
 
 export const LoginButton = styled.button`
   width: 85%;
@@ -54,14 +54,14 @@ export const LoginButton = styled.button`
     background: #490e76;
   }
   margin-top: 5rem;
-`
+`;
 
 export const FindMore = styled.p`
   width: 100%;
   height: 1rem;
   margin-top: 0.625rem;
   text-align: center;
-`
+`;
 
 export const FindIt = styled.a`
   font-size: 1.25rem;
@@ -74,4 +74,4 @@ export const FindIt = styled.a`
   &:active {
     color: #650fa9;
   }
-`
+`;

@@ -1,15 +1,15 @@
-import dayjs from 'dayjs'
-import 'dayjs/locale/ko'
-import { useState } from 'react'
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'
-import styled from 'styled-components'
-dayjs.locale('ko')
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import styled from 'styled-components';
+dayjs.locale('ko');
 
 type Props = {
-  toggleStatisticsBar: () => void
-  onDateChange: (newDate: Date | null) => void
-}
+  toggleStatisticsBar: () => void;
+  onDateChange: (newDate: Date | null) => void;
+};
 
 const StyledCalendar = styled(Calendar)`
   width: 43rem;
@@ -58,17 +58,17 @@ const StyledCalendar = styled(Calendar)`
     font-weight: bold;
     border-radius: 10px;
   }
-`
-type ValuePiece = Date | null
-type Value = ValuePiece | [ValuePiece, ValuePiece]
+`;
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 const StudyCalendar = ({ onDateChange }: Props) => {
-  const [date, setDate] = useState<Value>(null)
+  const [date, setDate] = useState<Value>(null);
 
   const handleDateChange = (newDate: Value) => {
-    const clickedDate = Array.isArray(newDate) ? newDate[0] : newDate
-    setDate(newDate)
-    onDateChange(clickedDate)
-  }
+    const clickedDate = Array.isArray(newDate) ? newDate[0] : newDate;
+    setDate(newDate);
+    onDateChange(clickedDate);
+  };
 
   return (
     <div>
@@ -82,6 +82,6 @@ const StudyCalendar = ({ onDateChange }: Props) => {
         prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
       />
     </div>
-  )
-}
-export default StudyCalendar
+  );
+};
+export default StudyCalendar;

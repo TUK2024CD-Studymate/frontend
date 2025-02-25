@@ -1,10 +1,10 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const SignUpWrapper = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const SignUpWrapper = styled.div`
   padding: 2rem;
   border-radius: 1.25rem;
   border: 1px solid var(--Gray-03, #bdbdbd);
-`
+`;
 
 export const SignUpH2 = styled.h2`
   width: 80%;
@@ -26,11 +26,11 @@ export const SignUpH2 = styled.h2`
   text-align: center;
   margin-bottom: 2rem;
   margin-top: 1.25rem;
-`
+`;
 
 export const InputWrap = styled.div`
   display: flex;
-`
+`;
 
 export const SignUpInput = styled.input`
   text-indent: 1.25rem;
@@ -41,7 +41,7 @@ export const SignUpInput = styled.input`
   border-radius: 0.625rem;
   margin: 0.625rem;
   font-size: 1.25rem;
-`
+`;
 
 export const SignUpInput2 = styled.input`
   text-indent: 1.25rem;
@@ -52,7 +52,7 @@ export const SignUpInput2 = styled.input`
   border-radius: 0.625rem;
   margin: 0.625rem;
   font-size: 1.25rem;
-`
+`;
 
 export const PhoneWrap = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ export const PhoneWrap = styled.div`
   height: 3.75rem;
   box-sizing: border-box;
   margin: 0.625rem;
-`
+`;
 
 export const SendNumBtn = styled.button`
   height: 3.75rem;
@@ -72,7 +72,7 @@ export const SendNumBtn = styled.button`
   font-weight: bold;
   padding: 0.5rem;
   cursor: pointer;
-`
+`;
 
 export const PhoneInput = styled.input`
   text-indent: 1.25rem;
@@ -83,7 +83,7 @@ export const PhoneInput = styled.input`
   border-radius: 0.625rem;
   font-size: 1.25rem;
   margin-right: 1.25rem;
-`
+`;
 
 export const VerifyBtn = styled.button`
   height: 3.75rem;
@@ -95,12 +95,12 @@ export const VerifyBtn = styled.button`
   font-weight: bold;
   padding: 0.5rem;
   cursor: pointer;
-`
+`;
 
 export const SelectBox = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 export const RoleSelect = styled.select`
   width: 9rem;
@@ -110,7 +110,7 @@ export const RoleSelect = styled.select`
   font-size: 1rem;
   text-align: center;
   margin: 0.625rem;
-`
+`;
 export const InterestsSelect = styled.select`
   width: 12.5rem;
   height: 2.5rem;
@@ -119,7 +119,7 @@ export const InterestsSelect = styled.select`
   font-size: 1rem;
   text-align: center;
   margin: 0.625rem;
-`
+`;
 
 export const SignUpSubmit = styled.button`
   width: 37.5rem;
@@ -135,4 +135,4 @@ export const SignUpSubmit = styled.button`
   &:active {
     background: #490e76;
   }
-`
+`;

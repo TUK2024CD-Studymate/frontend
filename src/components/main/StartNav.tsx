@@ -1,21 +1,21 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 interface StartNavProps {
-  handleStart: () => void
+  handleStart: () => void;
 }
 
 const Container = styled.div`
   position: fixed;
   bottom: 0;
   z-index: 3;
-`
+`;
 const Wrap = styled.div`
   display: flex;
   justify-content: center;
   width: 100vw;
   align-items: center;
   margin-bottom: 1.25rem;
-`
+`;
 
 const PlayStoreBtn = styled.button`
   margin: 1.8rem;
@@ -32,7 +32,7 @@ const PlayStoreBtn = styled.button`
   &:hover {
     opacity: 1;
   }
-`
+`;
 const StartBtn = styled.button`
   margin: 1.8rem;
   border-radius: 1rem;
@@ -48,7 +48,7 @@ const StartBtn = styled.button`
   &:hover {
     opacity: 1;
   }
-`
+`;
 
 function StartNav({ handleStart }: StartNavProps) {
   return (
@@ -60,14 +60,15 @@ function StartNav({ handleStart }: StartNavProps) {
               window.open(
                 'https://play.google.com/store/apps/details?id=com.studymate154.studymate',
               )
-            }>
+            }
+          >
             PLAY STORE
           </PlayStoreBtn>
           <StartBtn onClick={handleStart}>시작하기</StartBtn>
         </Wrap>
       </Container>
     </div>
-  )
+  );
 }
 
-export default StartNav
+export default StartNav;

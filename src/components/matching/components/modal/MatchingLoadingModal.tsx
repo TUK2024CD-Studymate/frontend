@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-import LoadingImg from '../assets/images/loading.png'
+import styled, { keyframes } from 'styled-components';
+import LoadingImg from '../assets/images/loading.png';
 
 const Container = styled.div`
   width: 56.25rem;
@@ -10,20 +10,20 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   box-shadow: 0rem 0rem 1.25rem 0.625rem rgba(0, 0, 0, 0.2);
-`
+`;
 
 const Title = styled.div`
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 2rem;
-`
+`;
 
 const Text = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 6.25rem;
   color: #666666;
-`
+`;
 
 const rotate = keyframes`
   from {
@@ -32,12 +32,12 @@ const rotate = keyframes`
   to {
     transform: rotate(360deg);
   }
-`
+`;
 
 const Loading = styled.img`
   margin-bottom: 6.25rem;
   animation: ${rotate} 2.5s linear infinite;
-`
+`;
 
 function MatchingLoadingModal() {
   return (
@@ -48,7 +48,7 @@ function MatchingLoadingModal() {
         <Loading src={LoadingImg} />
       </Container>
     </div>
-  )
+  );
 }
 
-export default MatchingLoadingModal
+export default MatchingLoadingModal;

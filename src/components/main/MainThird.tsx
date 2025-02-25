@@ -1,12 +1,12 @@
-import { useRef } from 'react'
-import { styled } from 'styled-components'
-import onboard_img_2 from '../../assets/images/onboard_img_2.png'
-import onboard_text_3 from '../../assets/images/onboard_text_3.png'
-import onboard_text_4 from '../../assets/images/onboard_text_4.png'
-import useOnScreen from '../utils/useOnScreen.ts'
+import { useRef } from 'react';
+import { styled } from 'styled-components';
+import onboard_img_2 from '../../assets/images/onboard_img_2.png';
+import onboard_text_3 from '../../assets/images/onboard_text_3.png';
+import onboard_text_4 from '../../assets/images/onboard_text_4.png';
+import useOnScreen from '../utils/useOnScreen.ts';
 
 interface OnboardProps {
-  isVisible?: boolean
+  isVisible?: boolean;
 }
 
 const Container = styled.div`
@@ -14,7 +14,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   position: relative;
-`
+`;
 
 const OnboardWrap = styled.div<OnboardProps>`
   position: absolute;
@@ -22,15 +22,15 @@ const OnboardWrap = styled.div<OnboardProps>`
   top: 20%;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 3s ease;
-`
+`;
 
 const Onboard1 = styled.img`
   margin: 1.8rem;
-`
+`;
 
 const Onboard2 = styled.img`
   margin: 1.8rem;
-`
+`;
 
 const ImgWrap = styled.div<OnboardProps>`
   position: absolute;
@@ -38,13 +38,13 @@ const ImgWrap = styled.div<OnboardProps>`
   top: 25%;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 1.5s ease;
-`
+`;
 
-const OnbardImg = styled.img``
+const OnbardImg = styled.img``;
 
 function MainThird() {
-  const onboardWrapRef = useRef<HTMLDivElement>(null!)
-  const isVisible = useOnScreen(onboardWrapRef)
+  const onboardWrapRef = useRef<HTMLDivElement>(null!);
+  const isVisible = useOnScreen(onboardWrapRef);
 
   return (
     <Container>
@@ -56,7 +56,7 @@ function MainThird() {
         <OnbardImg src={onboard_img_2} width="1000px" />
       </ImgWrap>
     </Container>
-  )
+  );
 }
 
-export default MainThird
+export default MainThird;

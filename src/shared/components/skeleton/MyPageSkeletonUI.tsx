@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 
 // Skeleton 애니메이션 키프레임
 const loadingAnimation = keyframes`
@@ -8,7 +8,7 @@ const loadingAnimation = keyframes`
   100% {
     background-position: 200% 0;
   }
-`
+`;
 
 // 애니메이션 적용
 const SkeletonItem = styled.span<{ width: string; height: string }>`
@@ -19,7 +19,7 @@ const SkeletonItem = styled.span<{ width: string; height: string }>`
   animation: ${loadingAnimation} 2s infinite;
   width: ${(props) => props.width};
   border-radius: 4px;
-`
+`;
 
 const SkeletonWrapper = styled.div`
   display: flex;
@@ -28,34 +28,34 @@ const SkeletonWrapper = styled.div`
   align-items: center;
   width: 31rem;
   height: 40rem;
-`
+`;
 const SkeletonUpper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1.25rem;
-`
+`;
 
 const SkeletonProfile = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 3rem;
   margin-bottom: 1.5rem;
-`
+`;
 
 const SkeletonName = styled.div`
   margin-bottom: 1.25rem;
-`
+`;
 
 const SkeletonLower = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const SkeletonTitle = styled.div`
   margin-top: 1.25rem;
-`
+`;
 
 // 스켈레톤 UI 컴포넌트
 function MyPageSkeletonUI() {
@@ -84,7 +84,7 @@ function MyPageSkeletonUI() {
         </SkeletonTitle>
       </SkeletonLower>
     </SkeletonWrapper>
-  )
+  );
 }
 
-export default MyPageSkeletonUI
+export default MyPageSkeletonUI;

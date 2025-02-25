@@ -1,5 +1,5 @@
-import { keyframes, styled } from 'styled-components'
-import onboarding1 from '../../assets/images/onboarding1.png'
+import { keyframes, styled } from 'styled-components';
+import onboarding1 from '../../assets/images/onboarding1.png';
 
 const textSlide1 = keyframes`
   0% {
@@ -11,7 +11,7 @@ const textSlide1 = keyframes`
       top: 12.5rem;
       opacity: 1;
   }
-`
+`;
 
 const textSlide2 = keyframes`
   0% {
@@ -22,7 +22,7 @@ const textSlide2 = keyframes`
     top: 2.5rem;
     opacity: 1;
   }
-`
+`;
 
 const Container = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const Container = styled.div`
   height: 100dvh;
   background-size: cover;
   position: relative;
-`
+`;
 
 const SloganWrap = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const SloganWrap = styled.div`
   left: 8%;
   top: 25%;
   flex-direction: column;
-`
+`;
 
 const Slogan1 = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ const Slogan1 = styled.div`
 
   animation: ${textSlide1} 1s ease-out;
   animation-fill-mode: forwards;
-`
+`;
 
 const Slogan2 = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ const Slogan2 = styled.div`
 
   animation: ${textSlide2} 1.8s ease-out;
   animation-fill-mode: forwards;
-`
+`;
 
 function MainFirst() {
   return (
@@ -75,13 +75,13 @@ function MainFirst() {
         <SloganWrap>
           <Slogan1>스터디 메이트</Slogan1>
           <Slogan2>
-            스터디 메이트는 각 개인의 학습에 맞춤화된 서비스로 효과적인 학습을 촉진합니다. 지금
-            시작하세요 !
+            스터디 메이트는 각 개인의 학습에 맞춤화된 서비스로 효과적인 학습을
+            촉진합니다. 지금 시작하세요 !
           </Slogan2>
         </SloganWrap>
       </Container>
     </div>
-  )
+  );
 }
 
-export default MainFirst
+export default MainFirst;

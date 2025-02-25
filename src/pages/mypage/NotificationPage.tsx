@@ -1,25 +1,25 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { IoNotificationsOffSharp } from 'react-icons/io5'
-import styled from 'styled-components'
-import CommentImg from '../../assets/images/commentIcon.png'
-import LikeImg from '../../assets/images/heartIcon.png'
-import MatchingImg from '../../assets/images/matchingIcon.png'
-import Header from '../../components/Header.tsx'
-import Navbar from '../../components/Navbar.tsx'
-import Profilebar from '../../shared/components/sidebar/Profilebar.tsx'
-import { useApiUrlStore } from '../../store/store.ts'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { IoNotificationsOffSharp } from 'react-icons/io5';
+import styled from 'styled-components';
+import CommentImg from '../../assets/images/commentIcon.png';
+import LikeImg from '../../assets/images/heartIcon.png';
+import MatchingImg from '../../assets/images/matchingIcon.png';
+import Header from '../../components/Header.tsx';
+import Navbar from '../../components/Navbar.tsx';
+import Profilebar from '../../shared/components/sidebar/Profilebar.tsx';
+import { useApiUrlStore } from '../../store/store.ts';
 
 interface NotificationList {
-  id: number
-  content: string
-  createdAt: string
+  id: number;
+  content: string;
+  createdAt: string;
 }
 
 const Container = styled.div`
   display: flex;
   margin-top: 3rem;
-`
+`;
 
 const NotificationWrapper = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const NotificationWrapper = styled.div`
   width: calc(100% - 25rem);
   min-height: 48.75rem;
   border-left: 1px solid #d8d8d8;
-`
+`;
 
 const Notification = styled.div`
   display: flex;
@@ -35,22 +35,22 @@ const Notification = styled.div`
   background-color: #faf3ff;
   width: 100%;
   height: 7rem;
-`
+`;
 
 const Type = styled.img`
   width: 3.75rem;
   margin: 2.5rem;
-`
+`;
 
 const PageName = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-`
+`;
 
 const Context = styled.div`
   font-size: 1.5rem;
   margin-left: 2.5rem;
-`
+`;
 
 const DeleteBtn = styled.div`
   display: flex;
@@ -72,71 +72,71 @@ const DeleteBtn = styled.div`
   &:hover {
     background-color: #bdbdbd;
   }
-`
+`;
 
 const NoNotificationsList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10rem;
-`
+`;
 
 const Text = styled.div`
   display: flex;
   font-size: 1.6rem;
   color: #9b9b9b;
-`
+`;
 
 function NotificationPage() {
-  const { apiUrl } = useApiUrlStore()
-  const [notifications, setNotifications] = useState<NotificationList[]>([])
+  const { apiUrl } = useApiUrlStore();
+  const [notifications, setNotifications] = useState<NotificationList[]>([]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const access = localStorage.getItem('accessToken')
+        const access = localStorage.getItem('accessToken');
         const response = await axios.get(`${apiUrl}/notification`, {
           headers: { Authorization: `Bearer ${access}` },
-        })
-        setNotifications(response.data)
+        });
+        setNotifications(response.data);
       } catch (error) {
-        console.error('Failed to fetch notifications', error)
+        console.error('Failed to fetch notifications', error);
       }
-    }
+    };
 
-    fetchNotifications()
-  }, [apiUrl])
+    fetchNotifications();
+  }, [apiUrl]);
 
   const getNotificationIcon = (content: string) => {
     if (content.includes('댓글')) {
-      return CommentImg
+      return CommentImg;
     } else if (content.includes('좋아요')) {
-      return LikeImg
+      return LikeImg;
     } else if (content.includes('매칭')) {
-      return MatchingImg
+      return MatchingImg;
     }
-  }
+  };
 
   const getNotificationPageName = (content: string) => {
     if (content.includes('댓글') || content.includes('좋아요')) {
-      return '게시판'
+      return '게시판';
     } else if (content.includes('매칭')) {
-      return '매칭'
+      return '매칭';
     }
-  }
+  };
 
   const handleDeleteNofificationList = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       await axios.delete(`${apiUrl}/notification`, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      alert('알림이 삭제되었습니다')
-      location.reload()
+      });
+      alert('알림이 삭제되었습니다');
+      location.reload();
     } catch (error) {
-      console.error('Failed to fetch notifications', error)
+      console.error('Failed to fetch notifications', error);
     }
-  }
+  };
 
   return (
     <div>
@@ -145,7 +145,9 @@ function NotificationPage() {
       <Container>
         <Profilebar />
         <NotificationWrapper>
-          <DeleteBtn onClick={handleDeleteNofificationList}>알림 삭제</DeleteBtn>
+          <DeleteBtn onClick={handleDeleteNofificationList}>
+            알림 삭제
+          </DeleteBtn>
           {notifications.length === 0 ? (
             <NoNotificationsList>
               <IoNotificationsOffSharp size={130} />
@@ -155,7 +157,9 @@ function NotificationPage() {
             notifications.map((notification) => (
               <Notification key={notification.id}>
                 <Type src={getNotificationIcon(notification.content)} />
-                <PageName>{getNotificationPageName(notification.content)}</PageName>
+                <PageName>
+                  {getNotificationPageName(notification.content)}
+                </PageName>
                 <Context>{notification.content}</Context>
               </Notification>
             ))
@@ -163,7 +167,7 @@ function NotificationPage() {
         </NotificationWrapper>
       </Container>
     </div>
-  )
+  );
 }
 
-export default NotificationPage
+export default NotificationPage;

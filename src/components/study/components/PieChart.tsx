@@ -12,16 +12,16 @@ interface PieChartProps {
 interface ChartData {
   labels: string[];
   datasets: {
-      label: string;
-      data: number[];
-      backgroundColor: string[];
+    label: string;
+    data: number[];
+    backgroundColor: string[];
   }[];
 }
 
 const timeToSeconds = (time: string): number => {
   const [hours, minutes, seconds] = time.split(':').map(Number);
   return hours * 3600 + minutes * 60 + seconds;
-}
+};
 
 const PieChart = ({ calenderList }: PieChartProps) => {
   const [chartData, setChartData] = useState<ChartData>({
@@ -41,29 +41,32 @@ const PieChart = ({ calenderList }: PieChartProps) => {
   });
 
   useEffect(() => {
-    const labels = calenderList.map(item => item.subjectName);
+    const labels = calenderList.map((item) => item.subjectName);
     const totalSeconds = calenderList.reduce(
       (total, item) => total + timeToSeconds(item.entireTime),
-      0
+      0,
     );
     const percentages = calenderList.map(
-      item => (timeToSeconds(item.entireTime) / totalSeconds) * 100
+      (item) => (timeToSeconds(item.entireTime) / totalSeconds) * 100,
     );
 
-    setChartData(prevData => ({
+    setChartData((prevData) => ({
       ...prevData,
       labels: labels,
-      datasets: [{
-        ...prevData.datasets[0],
-        data: percentages
-      }]
+      datasets: [
+        {
+          ...prevData.datasets[0],
+          data: percentages,
+        },
+      ],
     }));
   }, [calenderList]); // calenderList가 변경될 때마다 차트 데이터 업데이트
 
   const options = {
     plugins: {
       datalabels: {
-        formatter: (_value: any, context: any) => context.chart.data.labels[context.dataIndex],
+        formatter: (_value: any, context: any) =>
+          context.chart.data.labels[context.dataIndex],
       },
       legend: {
         display: true,
@@ -82,6 +85,6 @@ const PieChart = ({ calenderList }: PieChartProps) => {
   };
 
   return <Pie data={chartData} options={options} />;
-}
+};
 
 export default PieChart;

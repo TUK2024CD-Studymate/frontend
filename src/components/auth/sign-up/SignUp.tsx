@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { useApiUrlStore } from "store/store";
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useApiUrlStore } from 'store/store';
 
 import {
   Container,
@@ -17,14 +17,13 @@ import {
   SelectBox,
   RoleSelect,
   InterestsSelect,
-  SignUpSubmit
-} from "components/auth/sign-up/SignUp.styles.ts";
-
+  SignUpSubmit,
+} from 'components/auth/sign-up/SignUp.styles.ts';
 
 const partList = [
   { value: 'MENTOR', name: 'MENTOR' },
   { value: 'MENTEE', name: 'MENTEE' },
-]
+];
 
 const interestsList = [
   {
@@ -47,10 +46,10 @@ const interestsList = [
     name: '정보보안',
     value: 'SECURITY',
   },
-]
+];
 
 export default function SignUp() {
-  const { apiUrl } = useApiUrlStore()
+  const { apiUrl } = useApiUrlStore();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -67,21 +66,21 @@ export default function SignUp() {
     job: '',
     authNum: '',
     isAuth: false,
-  })
+  });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prevData: any) => ({
       ...prevData,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   // 회원가입 요청
   const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (
       !formData.email ||
@@ -94,11 +93,11 @@ export default function SignUp() {
       !formData.interests ||
       !formData.expertiseField
     ) {
-      alert('필수 정보를 입력해주세요.')
-      return
+      alert('필수 정보를 입력해주세요.');
+      return;
     } else if (!formData.isAuth) {
-      alert('휴대폰 번호 인증을 해주세요.')
-      return
+      alert('휴대폰 번호 인증을 해주세요.');
+      return;
     }
 
     // 회원가입 시 보낼 데이터 생성
@@ -114,74 +113,74 @@ export default function SignUp() {
       blogUrl: formData.blogurl,
       publicRelations: formData.PR,
       job: formData.job,
-    }
+    };
 
     // 회원가입 api
     try {
-      const response = await axios.post(`${apiUrl}/signIn`, postData)
+      const response = await axios.post(`${apiUrl}/signIn`, postData);
 
-      console.log(response.status)
-      alert('회원가입에 성공하였습니다.')
-      navigate('/login')
+      console.log(response.status);
+      alert('회원가입에 성공하였습니다.');
+      navigate('/login');
     } catch (error) {
-      alert('회원가입에 실패했습니다.')
-      console.error(error)
+      alert('회원가입에 실패했습니다.');
+      console.error(error);
     }
-  }
+  };
 
   // 인증번호 발송 api 요청
   const handleSendAuthNum = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { tel } = formData
+    const { tel } = formData;
     if (!tel) {
-      alert('전화번호를 입력해주세요.')
-      return
+      alert('전화번호를 입력해주세요.');
+      return;
     }
 
     try {
       const response = await axios.post(`${apiUrl}/signIn/message`, {
         tel: tel,
-      })
+      });
 
       if (response.status === 200) {
-        alert('인증번호가 발송되었습니다.')
+        alert('인증번호가 발송되었습니다.');
       } else {
-        alert('휴대폰 번호 11자리를 입력해주세요')
+        alert('휴대폰 번호 11자리를 입력해주세요');
       }
     } catch (error) {
-      console.error('Error : ', error)
-      alert('휴대폰 번호 11자리를 입력해주세요')
+      console.error('Error : ', error);
+      alert('휴대폰 번호 11자리를 입력해주세요');
     }
-  }
+  };
 
   // 인증번호 검증 api 요청
   const handleVerifyAuthNum = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { tel, authNum } = formData
+    const { tel, authNum } = formData;
     if (!authNum) {
-      alert('인증번호를 입력해주세요.')
-      return
+      alert('인증번호를 입력해주세요.');
+      return;
     }
     try {
       const response = await axios.post(`${apiUrl}/signIn/message/verify`, {
         phoneNumber: tel,
         randomNumber: authNum,
-      })
+      });
 
       if (response.status === 200) {
         setFormData((prevData: any) => ({
           ...prevData,
           isAuth: true,
-        }))
-        alert('인증되었습니다.')
+        }));
+        alert('인증되었습니다.');
       }
     } catch (error) {
-      console.error('Error : ', error)
-      alert('잘못된 인증번호 입니다.')
+      console.error('Error : ', error);
+      alert('잘못된 인증번호 입니다.');
     }
-  }
+  };
 
   return (
     <Container>
@@ -284,14 +283,22 @@ export default function SignUp() {
             />
           </InputWrap>
           <SelectBox>
-            <RoleSelect name="part" value={formData.part} onChange={handleChange}>
+            <RoleSelect
+              name="part"
+              value={formData.part}
+              onChange={handleChange}
+            >
               {partList.map((item) => (
                 <option value={item.value} key={item.name}>
                   {item.name}
                 </option>
               ))}
             </RoleSelect>
-            <InterestsSelect name="interests" value={formData.interests} onChange={handleChange}>
+            <InterestsSelect
+              name="interests"
+              value={formData.interests}
+              onChange={handleChange}
+            >
               {interestsList.map((item) => (
                 <option value={item.value} key={item.name}>
                   {item.name}
@@ -303,5 +310,5 @@ export default function SignUp() {
         </SignUpWrapper>
       </form>
     </Container>
-  )
+  );
 }

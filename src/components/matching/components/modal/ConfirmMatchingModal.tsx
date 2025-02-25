@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import UserImg from '../assets/images/profile.png'
+import styled from 'styled-components';
+import UserImg from '../assets/images/profile.png';
 
 const Container = styled.div`
   width: 56.25rem;
@@ -10,13 +10,13 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   box-shadow: 0rem 0rem 1.25rem 0.625rem rgba(0, 0, 0, 0.2);
-`
+`;
 
 const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 3rem;
-`
+`;
 
 const SelectWrap = styled.div`
   display: flex;
@@ -25,42 +25,42 @@ const SelectWrap = styled.div`
   width: 46.8rem;
   height: 16.8rem;
   flex-direction: column;
-`
+`;
 const UserWrap = styled.div`
   display: flex;
   align-items: center;
-`
-const UserImage = styled.img``
+`;
+const UserImage = styled.img``;
 
 const UserRole = styled.div`
   font-size: 1.75rem;
   font-weight: bold;
   margin: 0.5rem;
-`
+`;
 const UserNickname = styled.div`
   font-size: 1.75rem;
   margin: 0.5rem;
-`
+`;
 const UserInterests = styled.div`
   font-size: 1.3rem;
   margin: 0.5rem;
   font-weight: bold;
   color: #650fa9;
   margin-left: 1.25rem;
-`
+`;
 
-const DetailWrap = styled.div``
+const DetailWrap = styled.div``;
 
 const Detail = styled.div`
   font-size: 1.5rem;
   margin-left: 1.25rem;
-`
+`;
 
 const ConfirmWrap = styled.div`
   display: flex;
   align-items: center;
   margin-top: 3rem;
-`
+`;
 
 const AcceptBtn = styled.button`
   display: flex;
@@ -74,7 +74,7 @@ const AcceptBtn = styled.button`
   font-size: 1.25rem;
   font-weight: bold;
   margin: 0.625rem;
-`
+`;
 
 const RefuseBtn = styled.button`
   display: flex;
@@ -88,7 +88,7 @@ const RefuseBtn = styled.button`
   font-size: 1.25rem;
   font-weight: bold;
   margin: 0.625rem;
-`
+`;
 
 function ConfirmMatchingModal() {
   return (
@@ -115,7 +115,7 @@ function ConfirmMatchingModal() {
         </ConfirmWrap>
       </Container>
     </div>
-  )
+  );
 }
 
-export default ConfirmMatchingModal
+export default ConfirmMatchingModal;

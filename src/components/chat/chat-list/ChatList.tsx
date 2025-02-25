@@ -1,11 +1,11 @@
-import styled from 'styled-components'
-import ChatIMG from '../../assets/images/chatIcon.png'
-import { FaCircle } from 'react-icons/fa6'
-import { RxDividerVertical } from 'react-icons/rx'
-import { useApiUrlStore, useChatListStore } from '../../store/store'
-import axios from 'axios'
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import styled from 'styled-components';
+import ChatIMG from '../../assets/images/chatIcon.png';
+import { FaCircle } from 'react-icons/fa6';
+import { RxDividerVertical } from 'react-icons/rx';
+import { useApiUrlStore, useChatListStore } from '../../store/store';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -22,12 +22,12 @@ const Container = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 1.25rem;
-`
+`;
 
 const MainWrap = styled.div`
   display: flex;
   width: 65.6rem;
-`
+`;
 
 const ImgWrap = styled.div`
   display: flex;
@@ -35,12 +35,12 @@ const ImgWrap = styled.div`
   height: 8.125rem;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const ProfileImg = styled.img`
   width: 100%;
   height: 100%;
-`
+`;
 
 const InfoWrap = styled.div`
   display: flex;
@@ -48,7 +48,7 @@ const InfoWrap = styled.div`
   width: 56.25rem;
   height: 7.5rem;
   margin-left: 1.25rem;
-`
+`;
 
 const Top = styled.div`
   display: flex;
@@ -56,47 +56,47 @@ const Top = styled.div`
   justify-content: space-between;
   width: 56.25rem;
   height: 3.75rem;
-`
+`;
 
 const NameWrap = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const Name = styled.span`
   font-weight: bold;
   font-size: 2.3rem;
-`
+`;
 
 const NickName = styled.span`
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0.625rem;
-`
+`;
 
 const Bottom = styled.div`
   display: flex;
   width: 57.5rem;
   height: 3.75rem;
   align-items: center;
-`
+`;
 
 const Interest = styled.div`
   display: flex;
   color: #9b9b9b;
   font-size: 1.6rem;
-`
+`;
 
 const Detail = styled.div`
   display: flex;
   color: #9b9b9b;
   font-size: 1.6rem;
-`
+`;
 
 const StatusWrap = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const Status = styled.div`
   display: flex;
@@ -104,13 +104,13 @@ const Status = styled.div`
   font-weight: bold;
   font-size: 1.8rem;
   margin-left: 0.625rem;
-`
+`;
 
 const FooterWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 65.6rem;
-`
+`;
 
 const MessageCount = styled.div<{ count: number }>`
   display: ${(props) => (props.count > 0 ? 'flex' : 'none')};
@@ -123,39 +123,39 @@ const MessageCount = styled.div<{ count: number }>`
   color: #fff;
   font-weight: bold;
   font-size: 1.5rem;
-`
+`;
 
 const NoChatList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 18.75rem;
-`
+`;
 
 const Text = styled.div`
   display: flex;
   font-size: 1.6rem;
   color: #9b9b9b;
-`
+`;
 
 function ChatList() {
-  const { apiUrl } = useApiUrlStore()
-  const { chatList, setChatList } = useChatListStore()
+  const { apiUrl } = useApiUrlStore();
+  const { chatList, setChatList } = useChatListStore();
 
   const getChatList = async () => {
     try {
-      const access = localStorage.getItem('accessToken')
+      const access = localStorage.getItem('accessToken');
       const response = await axios.get(`${apiUrl}/chat/rooms/list`, {
         headers: { Authorization: `Bearer ${access}` },
-      })
-      setChatList(response.data)
-      console.log('api응답', response.data)
+      });
+      setChatList(response.data);
+      console.log('api응답', response.data);
     } catch (error) {}
-  }
+  };
 
   useEffect(() => {
-    getChatList()
-  }, [])
+    getChatList();
+  }, []);
 
   return (
     <div>
@@ -169,11 +169,17 @@ function ChatList() {
           .slice()
           .reverse()
           .map((chat) => (
-            <Link to={`/chats/room/${chat.chatRoomId}/${chat.members[0].id}`} key={chat.chatRoomId}>
+            <Link
+              to={`/chats/room/${chat.chatRoomId}/${chat.members[0].id}`}
+              key={chat.chatRoomId}
+            >
               <Container>
                 <MainWrap>
                   <ImgWrap>
-                    <ProfileImg src={chat.members[0].profileImageUrl} alt="프로필 이미지" />
+                    <ProfileImg
+                      src={chat.members[0].profileImageUrl}
+                      alt="프로필 이미지"
+                    />
                   </ImgWrap>
                   <InfoWrap>
                     <Top>
@@ -182,8 +188,12 @@ function ChatList() {
                         <NickName>{chat.members[0].nickname}</NickName>
                       </NameWrap>
                       <StatusWrap>
-                        <FaCircle color={chat.members[0].login ? '#2DC260' : '#9b9b9b'} />
-                        <Status>{chat.members[0].login ? '온라인' : '오프라인'}</Status>
+                        <FaCircle
+                          color={chat.members[0].login ? '#2DC260' : '#9b9b9b'}
+                        />
+                        <Status>
+                          {chat.members[0].login ? '온라인' : '오프라인'}
+                        </Status>
                       </StatusWrap>
                     </Top>
                     <Bottom>
@@ -203,7 +213,7 @@ function ChatList() {
           ))
       )}
     </div>
-  )
+  );
 }
 
-export default ChatList
+export default ChatList;

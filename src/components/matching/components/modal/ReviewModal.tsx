@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { IoMdClose, IoMdStar, IoMdStarOutline } from 'react-icons/io'
-import Modal from 'react-modal'
-import styled from 'styled-components'
-import { useReviewListStore } from '../../store/store'
+import { useEffect } from 'react';
+import { IoMdClose, IoMdStar, IoMdStarOutline } from 'react-icons/io';
+import Modal from 'react-modal';
+import styled from 'styled-components';
+import { useReviewListStore } from '../../store/store';
 
 interface ReviewModalProps {
-  isOpen: boolean
-  onClose: () => void
-  userName: string
+  isOpen: boolean;
+  onClose: () => void;
+  userName: string;
 }
 
 const Header = styled.div`
@@ -16,7 +16,7 @@ const Header = styled.div`
   font-weight: bold;
   margin: 1.25rem;
   margin-left: 4.3rem;
-`
+`;
 
 const MainWrap = styled.div`
   display: flex;
@@ -29,42 +29,42 @@ const MainWrap = styled.div`
   border-bottom: 2px solid #d8d8d8;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-`
+`;
 
 const Writer = styled.div`
   display: flex;
   font-size: 1.8rem;
   font-weight: bold;
-`
+`;
 
 const WriteDate = styled.div`
   display: flex;
   font-size: 1.5rem;
   color: #717171;
-`
+`;
 
 const StarWrap = styled.div`
   display: flex;
   margin: 1rem;
   margin-left: 0rem;
-`
+`;
 
 const Title = styled.div`
   display: flex;
   font-size: 1.6rem;
   font-weight: bold;
-`
+`;
 
 const Content = styled.div`
   display: flex;
   font-size: 1.25rem;
   margin-top: 0.625rem;
-`
+`;
 
 function ReviewModal({ isOpen, onClose, userName }: ReviewModalProps) {
-  const { reviewList } = useReviewListStore()
+  const { reviewList } = useReviewListStore();
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   return (
     <Modal
@@ -86,7 +86,8 @@ function ReviewModal({ isOpen, onClose, userName }: ReviewModalProps) {
           position: 'relative',
           padding: '1.25rem',
         },
-      }}>
+      }}
+    >
       <IoMdClose
         onClick={onClose}
         style={{
@@ -107,16 +108,16 @@ function ReviewModal({ isOpen, onClose, userName }: ReviewModalProps) {
           <StarWrap>
             {/* 별점을 반올림하여 표시 */}
             {(() => {
-              const roundedStar = Math.round(review.star)
-              const stars = []
+              const roundedStar = Math.round(review.star);
+              const stars = [];
               for (let i = 0; i < 5; i++) {
                 if (i < roundedStar) {
-                  stars.push(<IoMdStar key={i} size={32} />)
+                  stars.push(<IoMdStar key={i} size={32} />);
                 } else {
-                  stars.push(<IoMdStarOutline key={i} size={32} />)
+                  stars.push(<IoMdStarOutline key={i} size={32} />);
                 }
               }
-              return stars
+              return stars;
             })()}
           </StarWrap>
           <Title>{review.title}</Title>
@@ -124,7 +125,7 @@ function ReviewModal({ isOpen, onClose, userName }: ReviewModalProps) {
         </MainWrap>
       ))}
     </Modal>
-  )
+  );
 }
 
-export default ReviewModal
+export default ReviewModal;

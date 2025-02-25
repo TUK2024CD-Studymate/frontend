@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 // Skeleton 애니메이션 키프레임
 const loadingAnimation = keyframes`
@@ -17,21 +17,21 @@ const SkeletonItem = styled.span<{ width: string }>`
   background: linear-gradient(90deg, #e8e8e8, #f5f5f5, #e8e8e8);
   background-size: 200% 100%;
   animation: ${loadingAnimation} 2s infinite;
-  width: ${props => props.width};
+  width: ${(props) => props.width};
   border-radius: 4px;
 `;
 
 const SkeletonWrapper = styled.div`
-display: flex;
-flex-direction: column;
-width: calc(100% - 6.25rem);
-height: 12.5rem;
-border: 1px solid #d8d8d8;
-padding: 1.25rem 0rem 0rem 1.25rem;
-`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 6.25rem);
+  height: 12.5rem;
+  border: 1px solid #d8d8d8;
+  padding: 1.25rem 0rem 0rem 1.25rem;
+`;
 
 const SkeletonTitle = styled.div`
-width: 12.5rem;
+  width: 12.5rem;
 `;
 
 const SkeletonContent = styled.div`
@@ -40,12 +40,9 @@ const SkeletonContent = styled.div`
 `;
 
 const SkeletonFooter = styled.div`
-width: 28rem;
+  width: 28rem;
   margin-top: 1.25rem;
-
 `;
-
-
 
 // 스켈레톤 UI 컴포넌트
 function SkeletonUI() {
@@ -62,7 +59,7 @@ function SkeletonUI() {
         <SkeletonFooter>
           <SkeletonItem width="100%"></SkeletonItem>
         </SkeletonFooter>
-      </SkeletonWrapper>
+      </SkeletonWrapper>,
     );
   }
   return <>{skeletons}</>;
