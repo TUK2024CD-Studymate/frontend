@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import DividerImg from '../../assets/images/divider1.png'
 import Header from '../../components/Header.tsx'
 import Navbar from '../../components/Navbar.tsx'
-import PostsBar from '../../components/sidebar/Postsbar.tsx'
-import SkeletonUI from '../../components/skeleton/SkeletonUI.tsx'
+import PostsBar from '../../shared/components/sidebar/Postsbar.tsx'
+import SkeletonUI from '../../shared/components/skeleton/SkeletonUI.tsx'
 import {
   PostsList,
   useApiUrlStore,

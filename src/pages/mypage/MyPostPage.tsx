@@ -1,5 +1,5 @@
 import Header from '../../components/Header.tsx'
-import Profilebar from '../../components/sidebar/Profilebar.tsx'
+import Profilebar from '../../shared/components/sidebar/Profilebar.tsx'
 import Navbar from '../../components/Navbar.tsx'
 import DividerImg from '../../assets/images/divider1.png'
 import styled from 'styled-components'
@@ -7,7 +7,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useApiUrlStore, usePostListStore, useLoadingStore } from '../../store/store.ts'
 import { IoIosHeart, IoIosText } from 'react-icons/io'
-import SkeletonUI from '../../components/skeleton/SkeletonUI.tsx'
+import SkeletonUI from '../../shared/components/skeleton/SkeletonUI.tsx'
 
 const Container = styled.div`
   display: flex;
@@ -154,18 +154,20 @@ function MyPostPage() {
             postsList.map((post, index) => (
               <MyPost key={index}>
                 <BoardType>
-                  {
-                    (post.category === 'FREE' ? '자유게시판'
-                      : (post.category === 'STUDY'? '스터디 게시판'
-                          : (post.category === 'QUESTION' ? '질문게시판' : null)
-                  ))}
+                  {post.category === 'FREE'
+                    ? '자유게시판'
+                    : post.category === 'STUDY'
+                    ? '스터디 게시판'
+                    : post.category === 'QUESTION'
+                    ? '질문게시판'
+                    : null}
                 </BoardType>
                 <Title>{post.title}</Title>
                 <Context>{post.content}</Context>
                 <FooterWrap>
-                  <IoIosHeart size={28} color='ff0000'/>
+                  <IoIosHeart size={28} color="ff0000" />
                   <Heart>{post.likeCount}</Heart>
-                  <IoIosText size={28}/>
+                  <IoIosText size={28} />
                   <Comment>{post.commentCount}</Comment>
                   <Divider src={DividerImg} />
                   <DateCreated>{post.createdAt}</DateCreated>

@@ -9,7 +9,7 @@ import AddSubjectModal from '../components/AddSubjectModal.tsx'
 import Header from '../components/Header.tsx'
 import ModifySubjectModal from '../components/ModifySubjectModal.tsx'
 import Navbar from '../components/Navbar.tsx'
-import StatisticsBar from '../components/sidebar/StatisticsBar.tsx'
+import StatisticsBar from '../shared/components/sidebar/StatisticsBar.tsx'
 import Calendar from '../components/StudyCalendar.tsx'
 import { useApiUrlStore, useCalenderListState, useSubjectListState } from '../store/store'
 dayjs.locale('ko')

@@ -7,7 +7,7 @@ import LikeImg from '../../assets/images/heartIcon.png'
 import MatchingImg from '../../assets/images/matchingIcon.png'
 import Header from '../../components/Header.tsx'
 import Navbar from '../../components/Navbar.tsx'
-import Profilebar from '../../components/sidebar/Profilebar.tsx'
+import Profilebar from '../../shared/components/sidebar/Profilebar.tsx'
 import { useApiUrlStore } from '../../store/store.ts'
 
 interface NotificationList {

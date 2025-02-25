@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import { PiStar, PiStarFill } from 'react-icons/pi'
 import { useState } from 'react'
 import axios from 'axios'
-import { useApiUrlStore } from '../../store/store'
+import { useApiUrlStore } from "store/store"
 
 interface ReviewModalProps {
   isOpen: boolean

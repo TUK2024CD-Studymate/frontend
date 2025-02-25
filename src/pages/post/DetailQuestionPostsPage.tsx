@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import defaultImg from '../../assets/images/profileimg.png'
 import Header from '../../components/Header.tsx'
 import Navbar from '../../components/Navbar.tsx'
-import PostsBar from '../../components/sidebar/Postsbar.tsx'
-import Skeleton from '../../components/skeleton/DetailSkeletonUI.tsx'
+import PostsBar from '../../shared/components/sidebar/Postsbar.tsx'
+import Skeleton from '../../shared/components/skeleton/DetailSkeletonUI.tsx'
 import {
   getProfileImageUrl,
   useApiUrlStore,

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import PieChart from '../PieChart.tsx'
+import PieChart from '../../../components/PieChart.tsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { CalenderList, useApiUrlStore, useCalenderListState } from '../../store/store.ts'
-import { IoIosCreate } from "react-icons/io";
+import { CalenderList, useApiUrlStore, useCalenderListState } from '../../../store/store.ts'
+import { IoIosCreate } from 'react-icons/io'
 
 interface StatisticsBarProps {
   isOpen: boolean
@@ -63,9 +63,9 @@ const EmptyWrapper = styled.div`
   align-items: center;
 `
 const Message = styled.div`
-font-size: 1.5rem;
-font-weight: bold;
-color: #dddcdc;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #dddcdc;
 `
 
 const GrapWrapper = styled.div`
@@ -179,25 +179,25 @@ export default function StatisticsBar({ isOpen, selectedDate }: StatisticsBarPro
         </TimeRecodingWrapper>
       </UpperWrapper>
       <MainWrapper>
-      {filteredCalenderList.length === 0 ? (
-        <EmptyWrapper>
-          <IoIosCreate size={160} color='#e8e8e8'/>
-          <Message>작성된 스터디기록이 없어요!</Message>
-        </EmptyWrapper>
-      ) : (
-        <>
-        <GrapWrapper>
-          <PieChart calenderList={filteredCalenderList} />
-        </GrapWrapper>
-        <ListWrapper>
-          {percentages.map((study, index) => (
-            <List key={index}>
-              <Time>{study.entireTime}</Time>
-              <PerCent>{study.percentage.toFixed(2)}%</PerCent>
-            </List>
-          ))}
-        </ListWrapper>
-        </>
+        {filteredCalenderList.length === 0 ? (
+          <EmptyWrapper>
+            <IoIosCreate size={160} color="#e8e8e8" />
+            <Message>작성된 스터디기록이 없어요!</Message>
+          </EmptyWrapper>
+        ) : (
+          <>
+            <GrapWrapper>
+              <PieChart calenderList={filteredCalenderList} />
+            </GrapWrapper>
+            <ListWrapper>
+              {percentages.map((study, index) => (
+                <List key={index}>
+                  <Time>{study.entireTime}</Time>
+                  <PerCent>{study.percentage.toFixed(2)}%</PerCent>
+                </List>
+              ))}
+            </ListWrapper>
+          </>
         )}
       </MainWrapper>
     </Container>
