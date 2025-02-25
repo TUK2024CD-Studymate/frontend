@@ -1,11 +1,14 @@
-import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useApiUrlStore } from '../store/store';
+import { useApiUrlStore } from  "store/store";
+import axios from 'axios';
 
 type Prop = {
   PostingCloseModal: () => void;
-  getSubject: () => void;
+  studyClass: string;
+  startTime: string;
+  endTime: string;
+  getStudy: () => void;
 };
 
 const Container = styled.div`
@@ -19,17 +22,26 @@ const Container = styled.div`
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(0.5rem);
 `;
+
+const Info = styled.div`
+  display: flex;
+  justify-content: baseline;
+  width: 27rem;
+  margin-bottom: 2rem;
+`;
+
 const Modal = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 37rem;
-  height: 19rem;
+  width: 53rem;
+  height: 34rem;
   border-radius: 1rem;
   box-shadow: 0rem 0rem 1.25rem 0.625rem rgba(0, 0, 0, 0.2);
   background-color: white;
 `;
+
 const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
@@ -37,19 +49,20 @@ const Title = styled.div`
   margin-bottom: 1.25rem;
 `;
 const Textarea = styled.textarea`
-  width: 31rem;
-  height: 8rem;
-  font-size: 1.2rem;
+  width: 43.75rem;
+  height: 47rem;
+  font-size: 22px;
   border: 1px solid #dbdbdb;
-  margin-bottom: 1rem;
-  resize: none;
+  margin-bottom: 1.5rem;
 `;
+
 const BtnWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 12.5rem;
 `;
+
 const Btn = styled.div`
   width: 5rem;
   height: 2.5rem;
@@ -57,70 +70,53 @@ const Btn = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  border-radius: 0.5rem;
-  font-size: 1.25rem;
-  background-color: #ffffff;
-  border: solid 1px #bdbdbd;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #bdbdbd;
-  }
 `;
-function AddSubjectModal({ PostingCloseModal, getSubject }: Prop) {
-  const [subjectName, setSubjectName] = useState('');
+
+function StudyPostingModal({
+  PostingCloseModal,
+  studyClass,
+  startTime,
+  endTime,
+  getStudy,
+}: Prop) {
+  const [content, setContent] = useState('');
   const { apiUrl } = useApiUrlStore();
 
-  //과목 생성
-  const createSubject = async () => {
-    const subject = {
-      subjectName: subjectName,
+  const createStudy = async () => {
+    const calenderList = {
+      content: content,
+      studyClass: studyClass,
+      startTime: startTime,
+      endTime: endTime,
     };
-
     try {
       const access = localStorage.getItem('accessToken');
-      const response = await axios.post(`${apiUrl}/subject`, subject, {
+      const response = await axios.post(`${apiUrl}/calender`, calenderList, {
         headers: { Authorization: `Bearer ${access}` },
       });
-      alert('과목이 추가되었습니다.');
-      getSubject();
+      alert('완료되었습니다.');
+      getStudy();
       PostingCloseModal();
-      setSubjectName(subjectName);
       console.log(response.data);
     } catch (error) {
       alert('입력값이 비어있습니다. 확인해주세요.');
     }
   };
-  {
-    /*
-   //기록 수정조회
-   const updateStudy = async () => {
-    getStudy()
-    try {
-      const access = localStorage.getItem('accessToken')
-      const response = await axios.get(`${apiUrl}/calender`, {
-        headers: { Authorization: `Bearer ${access}` },})
-        setStudyList(response.data.calenderList)
-      PostingCloseModal()
-      console.log(response.data)
-    }
-    catch (error) {
-    alert('Error fetching study data:')
-  }
-}
-*/
-  }
+
   return (
     <div>
       <Container>
         <Modal>
-          <Title>추가할 과목을 입력하세요</Title>
+          <Title>오늘 스터디를 기록해보세요 </Title> <Info></Info>
           <Textarea
-            value={subjectName}
-            onChange={(e) => setSubjectName(e.target.value)}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
           <BtnWrapper>
-            <Btn onClick={createSubject}>저장</Btn>
+            <Btn onClick={createStudy}>저장</Btn>
             <Btn onClick={PostingCloseModal}>취소</Btn>
           </BtnWrapper>
         </Modal>
@@ -128,4 +124,5 @@ function AddSubjectModal({ PostingCloseModal, getSubject }: Prop) {
     </div>
   );
 }
-export default AddSubjectModal;
+
+export default StudyPostingModal;

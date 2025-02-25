@@ -1,142 +1,31 @@
-import styled from 'styled-components';
 import ChatIMG from '../../assets/images/chatIcon.png';
 import { FaCircle } from 'react-icons/fa6';
 import { RxDividerVertical } from 'react-icons/rx';
-import { useApiUrlStore, useChatListStore } from '../../store/store';
+import { useApiUrlStore, useChatListStore } from "store/store";
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Container,
+  MainWrap,
+  ImgWrap,
+  ProfileImg,
+  InfoWrap,
+  Top,
+  NameWrap,
+  Name,
+  NickName,
+  Bottom,
+  Interest,
+  Detail,
+  StatusWrap,
+  Status,
+  FooterWrap,
+  MessageCount,
+  NoChatList,
+  Text
+} from './ChatList.styles';
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 68.75rem;
-  height: 13rem;
-  border: 1px solid #d8d8d8;
-  border-radius: 1rem;
-  &:hover {
-    border: 1px solid #650fa9;
-  }
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  padding: 1.25rem;
-`;
-
-const MainWrap = styled.div`
-  display: flex;
-  width: 65.6rem;
-`;
-
-const ImgWrap = styled.div`
-  display: flex;
-  width: 8.125rem;
-  height: 8.125rem;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
-const InfoWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 56.25rem;
-  height: 7.5rem;
-  margin-left: 1.25rem;
-`;
-
-const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 56.25rem;
-  height: 3.75rem;
-`;
-
-const NameWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Name = styled.span`
-  font-weight: bold;
-  font-size: 2.3rem;
-`;
-
-const NickName = styled.span`
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin: 0.625rem;
-`;
-
-const Bottom = styled.div`
-  display: flex;
-  width: 57.5rem;
-  height: 3.75rem;
-  align-items: center;
-`;
-
-const Interest = styled.div`
-  display: flex;
-  color: #9b9b9b;
-  font-size: 1.6rem;
-`;
-
-const Detail = styled.div`
-  display: flex;
-  color: #9b9b9b;
-  font-size: 1.6rem;
-`;
-
-const StatusWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Status = styled.div`
-  display: flex;
-  color: #9b9b9b;
-  font-weight: bold;
-  font-size: 1.8rem;
-  margin-left: 0.625rem;
-`;
-
-const FooterWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 65.6rem;
-`;
-
-const MessageCount = styled.div<{ count: number }>`
-  display: ${(props) => (props.count > 0 ? 'flex' : 'none')};
-  justify-content: center;
-  align-items: center;
-  background-color: red;
-  width: 3.25rem;
-  height: 2.3rem;
-  border-radius: 1.8rem;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.5rem;
-`;
-
-const NoChatList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 18.75rem;
-`;
-
-const Text = styled.div`
-  display: flex;
-  font-size: 1.6rem;
-  color: #9b9b9b;
-`;
 
 function ChatList() {
   const { apiUrl } = useApiUrlStore();

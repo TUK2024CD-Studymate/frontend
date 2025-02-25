@@ -1,12 +1,11 @@
+import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useApiUrlStore } from '../store/store';
-import axios from 'axios';
+import { useApiUrlStore } from "store/store";
 
 type Prop = {
-  ModifyCloseModal: () => void;
+  PostingCloseModal: () => void;
   getSubject: () => void;
-  subject_id: number;
 };
 
 const Container = styled.div`
@@ -25,8 +24,8 @@ const Modal = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 37.5rem;
-  height: 18.75rem;
+  width: 37rem;
+  height: 19rem;
   border-radius: 1rem;
   box-shadow: 0rem 0rem 1.25rem 0.625rem rgba(0, 0, 0, 0.2);
   background-color: white;
@@ -38,11 +37,11 @@ const Title = styled.div`
   margin-bottom: 1.25rem;
 `;
 const Textarea = styled.textarea`
-  width: 31.25rem;
-  height: 6.25rem;
-  font-size: 1.3rem;
+  width: 31rem;
+  height: 8rem;
+  font-size: 1.2rem;
   border: 1px solid #dbdbdb;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   resize: none;
 `;
 const BtnWrapper = styled.div`
@@ -58,60 +57,75 @@ const Btn = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  border-radius: 5px;
-  font-size: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  background-color: #ffffff;
+  border: solid 1px #bdbdbd;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #bdbdbd;
+  }
 `;
-function ModifySubjectModal({
-  ModifyCloseModal,
-  getSubject,
-  subject_id,
-}: Prop) {
+function AddSubjectModal({ PostingCloseModal, getSubject }: Prop) {
   const [subjectName, setSubjectName] = useState('');
   const { apiUrl } = useApiUrlStore();
 
-  //과목 수정
-  const modifySubject = async () => {
+  //과목 생성
+  const createSubject = async () => {
     const subject = {
       subjectName: subjectName,
     };
 
     try {
       const access = localStorage.getItem('accessToken');
-      const response = await axios.post(
-        `${apiUrl}/subject/${subject_id}`,
-        subject,
-        {
-          headers: { Authorization: `Bearer ${access}` },
-        },
-      );
-      alert('완료되었습니다.');
+      const response = await axios.post(`${apiUrl}/subject`, subject, {
+        headers: { Authorization: `Bearer ${access}` },
+      });
+      alert('과목이 추가되었습니다.');
       getSubject();
-      ModifyCloseModal();
+      PostingCloseModal();
       setSubjectName(subjectName);
       console.log(response.data);
     } catch (error) {
-      console.log(subject_id);
       alert('입력값이 비어있습니다. 확인해주세요.');
     }
   };
-
+  {
+    /*
+   //기록 수정조회
+   const updateStudy = async () => {
+    getStudy()
+    try {
+      const access = localStorage.getItem('accessToken')
+      const response = await axios.get(`${apiUrl}/calender`, {
+        headers: { Authorization: `Bearer ${access}` },})
+        setStudyList(response.data.calenderList)
+      PostingCloseModal()
+      console.log(response.data)
+    }
+    catch (error) {
+    alert('Error fetching study data:')
+  }
+}
+*/
+  }
   return (
     <div>
       <Container>
         <Modal>
-          <Title>수정할 과목명을 입력해주세요</Title>
+          <Title>추가할 과목을 입력하세요</Title>
           <Textarea
             value={subjectName}
             onChange={(e) => setSubjectName(e.target.value)}
           />
           <BtnWrapper>
-            <Btn onClick={modifySubject}>수정</Btn>
-            <Btn onClick={ModifyCloseModal}>취소</Btn>
+            <Btn onClick={createSubject}>저장</Btn>
+            <Btn onClick={PostingCloseModal}>취소</Btn>
           </BtnWrapper>
         </Modal>
       </Container>
     </div>
   );
 }
-export default ModifySubjectModal;
+export default AddSubjectModal;
